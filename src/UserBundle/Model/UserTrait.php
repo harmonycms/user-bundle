@@ -4,6 +4,7 @@ namespace DH\UserBundle\Model;
 
 trait UserTrait
 {
+
     /**
      * @var string
      */
@@ -12,7 +13,7 @@ trait UserTrait
     /**
      * Sets plain-text password.
      *
-     * @param ?string $plainPassword
+     * @param null|string $plainPassword
      *
      * @return $this
      */
@@ -35,7 +36,6 @@ trait UserTrait
 
     /**
      * Returns the salt that was originally used to encode the password.
-     *
      * This can return null if the password was not encoded using a salt.
      *
      * @return string The salt
@@ -47,7 +47,6 @@ trait UserTrait
 
     /**
      * Removes sensitive data from the user.
-     *
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
      */
@@ -79,6 +78,7 @@ trait UserTrait
             $this->id,
             $this->username,
             $this->password,
-        ] = unserialize($serialized, ['allowed_classes' => false]);
+        ]
+            = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

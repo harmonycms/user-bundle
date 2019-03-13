@@ -4,8 +4,14 @@ namespace DH\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Trait ExtendedUserTrait
+ *
+ * @package DH\UserBundle\Model
+ */
 trait ExtendedUserTrait
 {
+
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank
@@ -79,7 +85,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $username
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setUsername($username)
     {
@@ -103,7 +109,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $password
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setPassword($password)
     {
@@ -127,9 +133,9 @@ trait ExtendedUserTrait
      *
      * @param string $email
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -143,7 +149,7 @@ trait ExtendedUserTrait
      */
     public function getRoles()
     {
-//        return array_unique(array_merge(['ROLE_USER'], $this->roles));
+        //        return array_unique(array_merge(['ROLE_USER'], $this->roles));
         return $this->roles;
     }
 
@@ -152,7 +158,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $roles
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setRoles($roles)
     {
@@ -176,7 +182,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $passwordRequestedAt
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt)
     {
@@ -200,7 +206,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $resetToken
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setResetToken(?string $resetToken)
     {
@@ -224,7 +230,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $expiredAt
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setExpiredAt(?\DateTime $expiredAt)
     {
@@ -248,7 +254,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $deletedAt
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setDeletedAt(?\DateTime $deletedAt)
     {
@@ -272,7 +278,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $isLocked
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setIsLocked($isLocked)
     {
@@ -296,7 +302,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $isPasswordResetRequired
      *
-     * @return UserTrait
+     * @return ExtendedUserTrait
      */
     public function setIsPasswordResetRequired($isPasswordResetRequired)
     {
@@ -308,11 +314,11 @@ trait ExtendedUserTrait
     /**
      * Sets plain-text password.
      *
-     * @param $plainPassword
+     * @param null|string $plainPassword
      *
      * @return $this
      */
-    public function setPlainPassword($plainPassword)
+    public function setPlainPassword(?string $plainPassword)
     {
         $this->plain_password = $plainPassword;
 
@@ -331,7 +337,6 @@ trait ExtendedUserTrait
 
     /**
      * Returns the salt that was originally used to encode the password.
-     *
      * This can return null if the password was not encoded using a salt.
      *
      * @return string The salt
@@ -343,7 +348,6 @@ trait ExtendedUserTrait
 
     /**
      * Removes sensitive data from the user.
-     *
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
      */
@@ -363,7 +367,8 @@ trait ExtendedUserTrait
      */
     public function isPasswordRequestExpired(int $ttl): bool
     {
-        return null === $this->getPasswordRequestedAt() || $this->getPasswordRequestedAt()->getTimestamp() + $ttl <= time();
+        return null === $this->getPasswordRequestedAt() ||
+            $this->getPasswordRequestedAt()->getTimestamp() + $ttl <= time();
     }
 
     /**
@@ -413,6 +418,7 @@ trait ExtendedUserTrait
             $this->expired_at,
             $this->deleted_at,
             $this->is_locked,
-        ] = unserialize($serialized, ['allowed_classes' => false]);
+        ]
+            = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
