@@ -65,7 +65,7 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             // ...
-            new DH\UserBundle\DHUserBundle(),
+            new Harmony\UserBundle\HarmonyUserBundle(),
         );
 
         // ...
@@ -104,7 +104,7 @@ Edit the `config/routes.yaml` file and add the following import rules.
 ```yaml
 # config/routes.yaml
 dh_userbundle:
-    resource: "@DHUserBundle/Controller/"
+    resource: "@HarmonyUserBundle/Controller/"
     type: annotation
 ```
 
@@ -163,13 +163,13 @@ The User class has to be an entity (the Doctrine way) which means a simple class
 of a table in the database. 
 
 Your User class has to implement a few interfaces to make it work with the bundle:
-- `DH\UserBundle\Security\UserInterface` which lists the methods expected to be callable by the bundle
+- `Harmony\UserBundle\Security\UserInterface` which lists the methods expected to be callable by the bundle
 - `\Serializable` regarding serialization/deserialization of User instances
 
 In addition, a few properties are required by the bundle and as a convenience, the bundle provides you two traits you 
 can `use` in your User class to minimize your work:
-- `DH\UserBundle\Model\ExtendedUserTrait` contains all the properties and methods required by the bundle.
-- `DH\UserBundle\Model\UserTrait` only contains the minimal, it's up to you to implement the remaining required properties 
+- `Harmony\UserBundle\Model\ExtendedUserTrait` contains all the properties and methods required by the bundle.
+- `Harmony\UserBundle\Model\UserTrait` only contains the minimal, it's up to you to implement the remaining required properties 
 and methods (you can then use the `ExtendedUserTrait` as an example)  
 
 Example of a User class using `ExtendedUserTrait`
@@ -178,8 +178,8 @@ Example of a User class using `ExtendedUserTrait`
 
 namespace App\Entity;
 
-use DH\UserBundle\Model\ExtendedUserTrait;
-use DH\UserBundle\Security\UserInterface;
+use Harmony\UserBundle\Model\ExtendedUserTrait;
+use Harmony\UserBundle\Security\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;

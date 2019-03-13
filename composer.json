@@ -1,5 +1,5 @@
 {
-  "name": "damienharper/user-bundle",
+  "name": "harmony/user-bundle",
   "type": "symfony-bundle",
   "description": "User Bundle",
   "keywords": ["user"],
@@ -11,15 +11,11 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
-    "doctrine/orm": "^2.5"
-  },
-  "suggest": {
-    "scheb/two-factor-bundle": "Two factor authentication bundle"
+    "php": ">=7.1"
   },
   "autoload": {
     "psr-4": {
-      "DH\\UserBundle\\": "src/UserBundle"
+      "Harmony\\UserBundle\\": ""
     }
   }
 }
