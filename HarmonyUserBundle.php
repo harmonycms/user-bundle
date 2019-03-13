@@ -20,12 +20,11 @@ class HarmonyUserBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $mappings = [
-            realpath(__DIR__ . '/Resources/config/doctrine-mapping') => 'Harmony\UserBundle\Model\User',
+            realpath(__DIR__ . '/Resources/config/doctrine-mapping') => Model\User::class,
         ];
 
         if (class_exists(DoctrineOrmMappingsPass::class)) {
-            $container->addCompilerPass(DoctrineOrmMappingsPass::createYamlMappingDriver($mappings,
-                ['Harmony\UserBundle\Model\UserManager'], true));
+            $container->addCompilerPass(DoctrineOrmMappingsPass::createYamlMappingDriver($mappings));
         }
     }
 }
