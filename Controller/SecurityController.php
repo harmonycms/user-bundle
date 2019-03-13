@@ -32,6 +32,7 @@ class SecurityController extends AbstractController
      *
      * @param AuthenticationUtils $authenticationUtils
      * @param SessionInterface    $session
+     * @param TranslatorInterface $translator
      */
     public function __construct(AuthenticationUtils $authenticationUtils, SessionInterface $session,
                                 TranslatorInterface $translator)
