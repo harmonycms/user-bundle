@@ -1,44 +1,27 @@
 services:
-    dh_userbundle.user_provider:
-        class: Harmony\UserBundle\Security\UserProvider
-        arguments: ["@doctrine", '@security.encoder_factory', '%dh_userbundle.user_class%']
+    _defaults:
         public: true
+        autowire: true
+        autoconfigure: true
 
-    Harmony\UserBundle\Model\UserManager:
-        arguments: ['@security.encoder_factory']
-        public: true
+    Harmony\UserBundle\Security\UserProvider:
+        arguments:
+            $userClass: '%harmony_user.user_class%'
+        public: false
 
-    Harmony\UserBundle\Controller\SecurityController:
-        calls:
-            - method: setContainer
-              arguments:
-                  - '@service_container'
-        public: true
+    Harmony\UserBundle\Model\UserManager: ~
 
-    Harmony\UserBundle\Controller\PasswordController:
-        calls:
-            - method: setContainer
-              arguments:
-                  - '@service_container'
-        public: true
+    Harmony\UserBundle\Controller\SecurityController: ~
 
-    dh_userbundle.user_manager:
-        alias: Harmony\UserBundle\Model\UserManager
-        public: true
+    Harmony\UserBundle\Controller\PasswordController: ~
 
-    dh_userbundle.user_event_subscriber:
-        class: Harmony\UserBundle\Event\UserEventSubscriber
-        arguments: ['@dh_userbundle.user_manager']
+    Harmony\UserBundle\Event\UserEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
-        public: true
 
-    dh_userbundle.user_checker:
-        class: Harmony\UserBundle\Security\UserChecker
-        arguments: ['@doctrine']
-        public: true
+    Harmony\UserBundle\Security\UserChecker: ~
 
-    dh_userbundle.mailer:
-        class: Harmony\UserBundle\Mailer\TwigSwiftMailer
-        arguments: ['@mailer', '@router', '@twig', { 'email_from': '%dh_userbundle.password_reset.email_from%' }]
-        public: true
+    Harmony\UserBundle\Mailer\TwigSwiftMailer:
+        arguments:
+            $mailer: '@mailer'
+            $parameters: { email_from: '%harmony_user.password_reset.email_from%' }

@@ -2,8 +2,8 @@
 
 {% trans_default_domain 'UserBundle' %}
 
-{% block dh_userbundle_body %}
-    {{ form_start(form, { method: 'POST', action: path('dh_userbundle_login') }) }}
+{% block harmony_user_body %}
+    {{ form_start(form, { method: 'POST', action: path('harmony_user_login') }) }}
     {{ form_row(form._username) }}
     {{ form_row(form._password) }}
     <div>
@@ -13,6 +13,6 @@
     {{ form_end(form) }}
 
     <div>
-        <a href="{{ path('dh_userbundle_password_request') }}" class="">{{ 'login.request_password'|trans }}</a>
+        <a href="{{ path('harmony_user_password_request') }}" class="">{{ 'login.request_password'|trans }}</a>
     </div>
-{% endblock dh_userbundle_body %}
+{% endblock harmony_user_body %}

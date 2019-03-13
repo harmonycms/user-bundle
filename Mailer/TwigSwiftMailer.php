@@ -24,7 +24,7 @@ class TwigSwiftMailer
     {
         $template = '@HarmonyUser/Password/request_email.html.twig';
         $url = $this->router->generate(
-            'dh_userbundle_password_reset',
+            'harmony_user_password_reset',
             ['token' => $user->getResetToken()],
             UrlGeneratorInterface::ABSOLUTE_URL
         );

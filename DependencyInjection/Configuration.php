@@ -17,9 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('dh_userbundle');
-        // Keep compatibility with symfony/config < 4.2
-        $rootNode = \method_exists($treeBuilder, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('dh_userbundle');
+        $treeBuilder = new TreeBuilder('harmony_user');
+        $rootNode    = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

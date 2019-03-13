@@ -20,8 +20,8 @@ class HarmonyUserExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
-        $container->setParameter('dh_userbundle.user_class', isset($config['user_class']) ? $config['user_class'] : null);
-        $container->setParameter('dh_userbundle.password_reset.email_from', isset($config['password_reset']['email_from']) ? $config['password_reset']['email_from'] : null);
-        $container->setParameter('dh_userbundle.password_reset.token_ttl', isset($config['password_reset']['token_ttl']) ? $config['password_reset']['token_ttl'] : null);
+        $container->setParameter('harmony_user.user_class', isset($config['user_class']) ? $config['user_class'] : null);
+        $container->setParameter('harmony_user.password_reset.email_from', isset($config['password_reset']['email_from']) ? $config['password_reset']['email_from'] : null);
+        $container->setParameter('harmony_user.password_reset.token_ttl', isset($config['password_reset']['token_ttl']) ? $config['password_reset']['token_ttl'] : null);
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="dh_userbundle_login", methods={"GET", "POST"})
+     * @Route("/login", name="harmony_user_login", methods={"GET", "POST"})
      */
     public function login()
     {
@@ -51,7 +51,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="dh_userbundle_logout")
+     * @Route("/logout", name="harmony_user_logout")
      */
     public function logout(): void
     {

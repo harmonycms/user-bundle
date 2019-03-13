@@ -6,7 +6,9 @@ use Harmony\UserBundle\Event\PasswordRequestEvent;
 use Harmony\UserBundle\Event\PasswordResetEvent;
 use Harmony\UserBundle\Form\Type\PasswordRequestType;
 use Harmony\UserBundle\Form\Type\PasswordResetType;
+use Harmony\UserBundle\Mailer\TwigSwiftMailer;
 use Harmony\UserBundle\Security\TokenGenerator;
+use Harmony\UserBundle\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +21,7 @@ class PasswordController extends AbstractController
     /**
      * Displays password reset request form.
      *
-     * @Route("/lost-password", name="dh_userbundle_password_request", methods={"GET"})
+     * @Route("/lost-password", name="harmony_user_password_request", methods={"GET"})
      */
     public function requestAction()
     {
@@ -32,8 +34,9 @@ class PasswordController extends AbstractController
 
     /**
      * Sends password reset request email.
+     * @Route("/lost-password", name="harmony_user_password_request_send", methods={"POST"})
      *
-     * @Route("/lost-password", name="dh_userbundle_password_request_send", methods={"POST"})
+     * @throws \Exception
      */
     public function sendAction(Request $request)
     {
@@ -50,7 +53,7 @@ class PasswordController extends AbstractController
                     ]);
                 }
 
-                $user = $this->get('dh_userbundle.user_provider')->findUserByUsername($username);
+                $user = $this->get(UserProvider::class)->findUserByUsername($username);
             } else {
                 return $this->render('@HarmonyUser/Password/request.html.twig', [
                     'form' => $form->createView(),
@@ -67,7 +70,7 @@ class PasswordController extends AbstractController
             ]);
         }
 
-        $ttl = $this->container->getParameter('dh_userbundle.password_reset.token_ttl');
+        $ttl = $this->container->getParameter('harmony_user.password_reset.token_ttl');
         if (!$user->isPasswordRequestExpired($ttl)) {
             return $this->render('@HarmonyUser/Password/already_requested.html.twig', [
                 'email' => $user->getEmail(),
@@ -79,7 +82,7 @@ class PasswordController extends AbstractController
             $user->setResetToken(TokenGenerator::generateToken());
         }
 
-        $mailer = $this->get('dh_userbundle.mailer');
+        $mailer = $this->get(TwigSwiftMailer::class);
         $mailer->sendResetMessage($user);
 
         $user->setPasswordRequestedAt(new \DateTime());
@@ -97,7 +100,7 @@ class PasswordController extends AbstractController
         }
 
         return new RedirectResponse($this->get('router')->generate(
-            'dh_userbundle_password_request_sent',
+            'harmony_user_password_request_sent',
             ['email' => $user->getEmail()]
         ));
     }
@@ -105,16 +108,16 @@ class PasswordController extends AbstractController
     /**
      * Tells the user to check his email provider.
      *
-     * @Route("/lost-password-confirmation", name="dh_userbundle_password_request_sent", methods={"GET"})
+     * @Route("/lost-password-confirmation", name="harmony_user_password_request_sent", methods={"GET"})
      */
     public function sentAction(Request $request)
     {
         $email = $request->query->get('email');
-        $ttl = $this->container->getParameter('dh_userbundle.password_reset.token_ttl');
+        $ttl = $this->container->getParameter('harmony_user.password_reset.token_ttl');
 
         if (empty($email)) {
             // the user does not come from the sendEmail action
-            return new RedirectResponse($this->get('router')->generate('dh_userbundle_security_request'));
+            return new RedirectResponse($this->get('router')->generate('harmony_user_security_request'));
         }
 
         return $this->render('@HarmonyUser/Password/requested.html.twig', [
@@ -126,14 +129,14 @@ class PasswordController extends AbstractController
     /**
      * Resets user password.
      *
-     * @Route("/password-reset/{token}", name="dh_userbundle_password_reset", methods={"GET", "POST"})
+     * @Route("/password-reset/{token}", name="harmony_user_password_reset", methods={"GET", "POST"})
      *
      * @param mixed $token
      */
     public function resetAction(Request $request, ?string $token)
     {
         try {
-            $user = $this->get('dh_userbundle.user_provider')->findUserByResetToken($token);
+            $user = $this->get(UserProvider::class)->findUserByResetToken($token);
         } catch (UsernameNotFoundException $e) {
             $this->get('session')->getFlashBag()->add(
                 'error',
@@ -161,7 +164,7 @@ class PasswordController extends AbstractController
             }
 
             if (0 !== strlen($password = $user->getPlainPassword())) {
-                $encoder = $this->get('dh_userbundle.user_provider')->getEncoder($user);
+                $encoder = $this->get(UserProvider::class)->getEncoder($user);
                 $user->setPassword($encoder->encodePassword($password, $user->getSalt()));
                 $user->eraseCredentials();
             }
@@ -191,7 +194,7 @@ class PasswordController extends AbstractController
                 $this->get('translator')->trans('password.reset.success', [], 'UserBundle')
             );
 
-            $url = $this->get('router')->generate('dh_userbundle_login');
+            $url = $this->get('router')->generate('harmony_user_login');
             $response = new RedirectResponse($url);
 
             return $response;

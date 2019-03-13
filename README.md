@@ -103,7 +103,7 @@ Edit the `config/routes.yaml` file and add the following import rules.
 
 ```yaml
 # config/routes.yaml
-dh_userbundle:
+harmony_user:
     resource: "@HarmonyUserBundle/Controller/"
     type: annotation
 ```
@@ -128,7 +128,7 @@ security:
 
     providers:
         user_provider:
-            id: dh_userbundle.user_provider
+            id: harmony_user.user_provider
 
     firewalls:
         dev:
@@ -138,12 +138,12 @@ security:
         main:
             pattern:  ^/
             provider: user_provider
-            user_checker: dh_userbundle.user_checker
+            user_checker: harmony_user.user_checker
             anonymous:    true
 
             form_login:
-                login_path: dh_userbundle_login
-                check_path: dh_userbundle_login
+                login_path: harmony_user_login
+                check_path: harmony_user_login
 
             logout: true
 

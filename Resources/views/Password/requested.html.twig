@@ -4,6 +4,6 @@
 
 {% block title %}Password reset{% endblock title %}
 
-{% block dh_userbundle_body %}
+{% block harmony_user_body %}
     {{ 'password.request.sent'|trans({'{email}': email, '{ttl}': ttl})|raw }}
-{% endblock dh_userbundle_body %}
+{% endblock harmony_user_body %}
