@@ -1,0 +1,54 @@
+Harmony\UserBundle\Model\User:
+    type: mappedSuperclass
+    fields:
+        username:
+            type: string
+            unique: true
+
+        password:
+            type: string
+            length: 64
+
+        email:
+            type: string
+            unique: true
+
+        roles:
+            type: array
+
+        passwordRequestedAt:
+            type: datetime
+            nullable: true
+            options:
+                default: null
+
+        resetToken:
+            type: string
+            length: 255
+            nullable: true
+            options:
+                default: null
+
+        expiredAt:
+            type: datetime
+            nullable: true
+            options:
+                default: null
+
+        deletedAt:
+            type: datetime
+            nullable: true
+            options:
+                default: null
+
+        isLocked:
+            type: boolean
+            options:
+                default: 0
+
+        isPasswordResetRequired:
+            type: boolean
+            options:
+                default: 0
+
+        plainPassword:

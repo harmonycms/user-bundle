@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 interface UserInterface extends BaseUserInterface
 {
+
     /**
      * Get the value of email.
      *
@@ -55,7 +56,7 @@ interface UserInterface extends BaseUserInterface
     /**
      * Set the value of reset_token.
      *
-     * @param null|string $token
+     * @param string|null $token
      *
      * @return self
      */

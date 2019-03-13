@@ -1,0 +1,8 @@
+Harmony\UserBundle\Model\User:
+    properties:
+        username:
+            - NotBlank: ~
+
+        email:
+            - NotBlank: ~
+            - Email: ~

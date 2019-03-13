@@ -2,73 +2,70 @@
 
 namespace Harmony\UserBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Harmony\UserBundle\Security\UserInterface;
 
 /**
- * Trait ExtendedUserTrait
+ * Class User
  *
  * @package Harmony\UserBundle\Model
  */
-trait ExtendedUserTrait
+abstract class User implements UserInterface, \Serializable
 {
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank
+     * @var string $username
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @var string $password
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @var string $email
      */
     private $email;
 
     /**
-     * @ORM\Column(type="array")
+     * @var array $roles
      */
     private $roles = [];
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, options={"default": NULL})
+     * @var \DateTime $passwordRequestedAt
      */
-    protected $password_requested_at;
+    protected $passwordRequestedAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, options={"default": NULL})
+     * @var string $resetToken
      */
-    protected $reset_token;
+    protected $resetToken;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, options={"default": NULL})
+     * @var \DateTime $expiredAt
      */
-    protected $expired_at;
+    protected $expiredAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, options={"default": NULL})
+     * @var \DateTime $deletedAt
      */
-    protected $deleted_at;
+    protected $deletedAt;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": "0"})
+     * @var boolean $isLocked
      */
-    protected $is_locked = false;
+    protected $isLocked = false;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": "0"})
+     * @var boolean $isPasswordResetRequired
      */
-    protected $is_password_reset_required = false;
+    protected $isPasswordResetRequired = false;
 
     /**
-     * @var string
+     * @var string $plainPassword
      */
-    protected $plain_password;
+    protected $plainPassword;
 
     /**
      * Get the value of username.
@@ -85,7 +82,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $username
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setUsername($username)
     {
@@ -109,7 +106,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $password
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setPassword($password)
     {
@@ -133,7 +130,7 @@ trait ExtendedUserTrait
      *
      * @param string $email
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setEmail(string $email)
     {
@@ -158,7 +155,7 @@ trait ExtendedUserTrait
      *
      * @param mixed $roles
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setRoles($roles)
     {
@@ -174,7 +171,7 @@ trait ExtendedUserTrait
      */
     public function getPasswordRequestedAt(): ?\DateTime
     {
-        return $this->password_requested_at;
+        return $this->passwordRequestedAt;
     }
 
     /**
@@ -182,11 +179,11 @@ trait ExtendedUserTrait
      *
      * @param mixed $passwordRequestedAt
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt)
     {
-        $this->password_requested_at = $passwordRequestedAt;
+        $this->passwordRequestedAt = $passwordRequestedAt;
 
         return $this;
     }
@@ -198,19 +195,19 @@ trait ExtendedUserTrait
      */
     public function getResetToken(): ?string
     {
-        return $this->reset_token;
+        return $this->resetToken;
     }
 
     /**
      * Set the value of reset_token.
      *
-     * @param mixed $resetToken
+     * @param mixed $token
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
-    public function setResetToken(?string $resetToken)
+    public function setResetToken(?string $token)
     {
-        $this->reset_token = $resetToken;
+        $this->resetToken = $token;
 
         return $this;
     }
@@ -222,7 +219,7 @@ trait ExtendedUserTrait
      */
     public function getExpiredAt(): ?\DateTime
     {
-        return $this->expired_at;
+        return $this->expiredAt;
     }
 
     /**
@@ -230,11 +227,11 @@ trait ExtendedUserTrait
      *
      * @param mixed $expiredAt
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setExpiredAt(?\DateTime $expiredAt)
     {
-        $this->expired_at = $expiredAt;
+        $this->expiredAt = $expiredAt;
 
         return $this;
     }
@@ -246,7 +243,7 @@ trait ExtendedUserTrait
      */
     public function getDeletedAt(): ?\DateTime
     {
-        return $this->deleted_at;
+        return $this->deletedAt;
     }
 
     /**
@@ -254,11 +251,11 @@ trait ExtendedUserTrait
      *
      * @param mixed $deletedAt
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setDeletedAt(?\DateTime $deletedAt)
     {
-        $this->deleted_at = $deletedAt;
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
@@ -270,7 +267,7 @@ trait ExtendedUserTrait
      */
     public function isLocked(): bool
     {
-        return $this->is_locked;
+        return $this->isLocked;
     }
 
     /**
@@ -278,11 +275,11 @@ trait ExtendedUserTrait
      *
      * @param mixed $isLocked
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setIsLocked($isLocked)
     {
-        $this->is_locked = $isLocked;
+        $this->isLocked = $isLocked;
 
         return $this;
     }
@@ -294,7 +291,7 @@ trait ExtendedUserTrait
      */
     public function isPasswordResetRequired(): bool
     {
-        return $this->is_password_reset_required;
+        return $this->isPasswordResetRequired;
     }
 
     /**
@@ -302,11 +299,11 @@ trait ExtendedUserTrait
      *
      * @param mixed $isPasswordResetRequired
      *
-     * @return ExtendedUserTrait
+     * @return User
      */
     public function setIsPasswordResetRequired($isPasswordResetRequired)
     {
-        $this->is_password_reset_required = $isPasswordResetRequired;
+        $this->isPasswordResetRequired = $isPasswordResetRequired;
 
         return $this;
     }
@@ -320,7 +317,7 @@ trait ExtendedUserTrait
      */
     public function setPlainPassword(?string $plainPassword)
     {
-        $this->plain_password = $plainPassword;
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
@@ -332,7 +329,7 @@ trait ExtendedUserTrait
      */
     public function getPlainPassword(): ?string
     {
-        return $this->plain_password;
+        return $this->plainPassword;
     }
 
     /**
@@ -353,7 +350,7 @@ trait ExtendedUserTrait
      */
     public function eraseCredentials()
     {
-        $this->plain_password = null;
+        $this->plainPassword = null;
 
         return $this;
     }
@@ -400,9 +397,9 @@ trait ExtendedUserTrait
             $this->id,
             $this->username,
             $this->password,
-            $this->expired_at,
-            $this->deleted_at,
-            $this->is_locked,
+            $this->expiredAt,
+            $this->deletedAt,
+            $this->isLocked,
         ]);
     }
 
@@ -415,9 +412,9 @@ trait ExtendedUserTrait
             $this->id,
             $this->username,
             $this->password,
-            $this->expired_at,
-            $this->deleted_at,
-            $this->is_locked,
+            $this->expiredAt,
+            $this->deletedAt,
+            $this->isLocked,
         ]
             = unserialize($serialized, ['allowed_classes' => false]);
     }
