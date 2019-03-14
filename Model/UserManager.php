@@ -2,23 +2,67 @@
 
 namespace Harmony\UserBundle\Model;
 
+use Exception;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class UserManager
+ *
+ * @package Harmony\UserBundle\Model
+ */
 class UserManager
 {
-    /**
-     * @var PasswordEncoderInterface
-     */
+
+    /** @var string $userClass */
+    protected $userClass;
+
+    /** @var PasswordEncoderInterface $encoderFactory */
     private $encoderFactory;
 
-    public function __construct(EncoderFactoryInterface $encoderFactory)
+    /**
+     * UserManager constructor.
+     *
+     * @param EncoderFactoryInterface $encoderFactory
+     * @param string                  $userClass
+     */
+    public function __construct(EncoderFactoryInterface $encoderFactory, string $userClass)
     {
         $this->encoderFactory = $encoderFactory;
+        $this->userClass      = $userClass;
     }
 
+    /**
+     * @return UserInterface
+     * @throws Exception
+     */
+    public function createUser(): UserInterface
+    {
+        $class = $this->getClass();
+
+        return new $class();
+    }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
+    private function getClass()
+    {
+        if (!class_exists($this->userClass)) {
+            throw new Exception('Class not found : ' . $this->userClass);
+        }
+
+        return new $this->userClass;
+    }
+
+    /**
+     * @param UserInterface|User $user
+     *
+     * @throws \Exception
+     */
     public function hashPassword(UserInterface $user)
     {
         $plainPassword = $user->getPlainPassword();
@@ -30,7 +74,8 @@ class UserManager
             }
             $user->setSalt($salt);
 
-            $hashedPassword = $this->encoderFactory->getEncoder($user)->encodePassword($plainPassword, $user->getSalt());
+            $hashedPassword = $this->encoderFactory->getEncoder($user)
+                ->encodePassword($plainPassword, $user->getSalt());
             $user->setPassword($hashedPassword);
             $user->eraseCredentials();
         }

@@ -3,19 +3,23 @@ services:
         public: true
         autowire: true
         autoconfigure: true
+        bind:
+            $userClass: '%harmony_user.user_class%'
 
     Harmony\UserBundle\Security\UserProvider:
-        arguments:
-            $userClass: '%harmony_user.user_class%'
         public: false
 
+    Harmony\UserBundle\Form\Type\RegistrationFormType: ~
+
     Harmony\UserBundle\Model\UserManager: ~
+
+    Harmony\UserBundle\Controller\RegistrationController: ~
 
     Harmony\UserBundle\Controller\SecurityController: ~
 
     Harmony\UserBundle\Controller\PasswordController:
-      arguments:
-        $resetTokenTtl: '%harmony_user.password_reset.token_ttl%'
+        arguments:
+            $resetTokenTtl: '%harmony_user.password_reset.token_ttl%'
 
     Harmony\UserBundle\Event\UserEventSubscriber:
         tags:
