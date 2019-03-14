@@ -7,20 +7,17 @@ This bundle, simple yet convenient, lets you easily add to your application feat
 - user account expiration
 - force a user to reset his password at first connection
 
-**Notes**: 
+**Notes**:
+- this bundle is full decoupled from Doctrine any abstraction layer.
+- this bundle provide Doctrine mapping configuration for ORM and MongoDB.
 - this bundle assumes you're using Doctrine to persist and retrieve your users. It provides a Doctrine UserProvider.
-- if you need two factor authentication (2FA), this bundle plays nicely with [TwoFactorBundle](https://github.com/scheb/two-factor-bundle)
-- this bundle is inspired by [FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle.git)
 
 
 Configuration
 =============
 
-**Note**: following configuration instructions target a Symfony 4 application.
-
 ## Step 1: Configure the bundle
-
-Create a file named `harmony_user.yaml` in the `config/packages` directory with the following content.
+Create a file named `harmony_user.yaml` in the `config/packages` directory with the following content:
 
 ```yaml
 # config/packages/harmony_user.yaml
@@ -35,8 +32,7 @@ harmony_user:
 - By default, the bundle assumes your User class name is `App\Entity\User`
 
 ## Step 2: Setup routes
-
-Edit the `config/routes.yaml` file and add the following import rules.
+This bundle provide the recipe file `config/routes/harmony_user.yaml` with the following content:
 
 ```yaml
 # config/routes.yaml
@@ -44,8 +40,6 @@ harmony_user:
     resource: "@HarmonyUserBundle/Controller/"
     type: annotation
 ```
-
-Then, you'll have basic pages for logging in, requesting a password reset, resetting a password.
 
 ## Step 3: Enable the bundle for your firewall
 
@@ -94,29 +88,17 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 ```
 
-## Step 4: Create (or update) your User class
+## Step 4: User class
+This bundle provide a default entity class `App\Entity\User`, configured by a Symfony recipe.
+This class already extends the abstract mapped entity `Harmony\UserBundle\Model\User` with the following content:
 
-The User class has to be an entity (the Doctrine way) which means a simple class containing properties mapped to columns
-of a table in the database. 
-
-Your User class has to implement a few interfaces to make it work with the bundle:
-- `Harmony\UserBundle\Security\UserInterface` which lists the methods expected to be callable by the bundle
-- `\Serializable` regarding serialization/deserialization of User instances
-
-In addition, a few properties are required by the bundle and as a convenience, the bundle provides you two traits you 
-can `use` in your User class to minimize your work:
-- `Harmony\UserBundle\Model\ExtendedUserTrait` contains all the properties and methods required by the bundle.
-- `Harmony\UserBundle\Model\UserTrait` only contains the minimal, it's up to you to implement the remaining required properties 
-and methods (you can then use the `ExtendedUserTrait` as an example)  
-
-Example of a User class using `ExtendedUserTrait`
 ```php
 <?php
 
 namespace App\Entity;
 
-use Harmony\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Harmony\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
