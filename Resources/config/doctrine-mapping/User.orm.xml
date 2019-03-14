@@ -6,37 +6,21 @@
 
   <mapped-superclass name="Harmony\UserBundle\Model\User">
 
-    <field name="username" column="username" type="string" unique="true"/>
+    <field name="username" column="username" unique="true"/>
 
-    <field name="password" column="password" type="string" length="64"/>
+    <field name="password" column="password" length="64"/>
 
-    <field name="email" column="email" type="string" unique="true"/>
+    <field name="email" column="email" unique="true"/>
 
     <field name="roles" column="roles" type="array"/>
 
-    <field name="passwordRequestedAt" column="password_requested_at" type="datetime" nullable="true">
-      <options>
-        <option name="default">null</option>
-      </options>
-    </field>
+    <field name="passwordRequestedAt" column="password_requested_at" type="datetime" nullable="true"/>
 
-    <field name="resetToken" column="reset_token" type="string" length="255" nullable="true">
-      <options>
-        <option name="default">null</option>
-      </options>
-    </field>
+    <field name="resetToken" column="reset_token" length="255" nullable="true"/>
 
-    <field name="expiredAt" column="expired_at" type="datetime" nullable="true">
-      <options>
-        <option name="default">null</option>
-      </options>
-    </field>
+    <field name="expiredAt" column="expired_at" type="datetime" nullable="true"/>
 
-    <field name="deletedAt" column="deleted_at" type="datetime" nullable="true">
-      <options>
-        <option name="default">null</option>
-      </options>
-    </field>
+    <field name="deletedAt" column="deleted_at" type="datetime" nullable="true"/>
 
     <field name="isLocked" column="is_locked" type="boolean">
       <options>
