@@ -45,24 +45,30 @@ class RegistrationFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('email', EmailType::class, ['label' => 'form.email'])
-            ->add('username', TextType::class, ['label' => 'form.username'])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'label'       => 'form.plain_password',
-                'mapped'      => false,
-                'constraints' => [
-                    new NotBlank(['message' => 'Please enter a password']),
-                    new Length([
-                        'min'        => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'max'        => 4096
-                    ])
-                ]
-            ])
-            ->add('submit', SubmitType::class);
+        $builder->add('email', EmailType::class, [
+            'label'              => 'registration.email.label',
+            'translation_domain' => 'UserBundle'
+        ])->add('username', TextType::class, [
+            'label'              => 'registration.username.label',
+            'translation_domain' => 'UserBundle'
+        ])->add('plainPassword', PasswordType::class, [
+            // instead of being set onto the object directly,
+            // this is read and encoded in the controller
+            'label'              => 'registration.plain_password.label',
+            'translation_domain' => 'UserBundle',
+            'mapped'             => false,
+            'constraints'        => [
+                new NotBlank(['message' => 'Please enter a password']),
+                new Length([
+                    'min'        => 6,
+                    'minMessage' => 'Your password should be at least {{ limit }} characters',
+                    'max'        => 4096
+                ])
+            ]
+        ])->add('submit', SubmitType::class, [
+            'label'              => 'registration.submit.button',
+            'translation_domain' => 'UserBundle'
+        ]);
     }
 
     /**

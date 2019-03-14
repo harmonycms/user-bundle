@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
+  <file id="UserBundle.en">
+    <unit id="login">
+      <segment>
+        <source>login.username.label</source>
+        <target>Username or email</target>
+      </segment>
+      <segment>
+        <source>login.username.placeholder</source>
+        <target>Username or email</target>
+      </segment>
+      <segment>
+        <source>login.password.label</source>
+        <target>Password</target>
+      </segment>
+      <segment>
+        <source>login.password.placeholder</source>
+        <target>Password</target>
+      </segment>
+      <segment>
+        <source>login.submit.button</source>
+        <target>Signin</target>
+      </segment>
+      <segment>
+        <source>login.request_password</source>
+        <target>I forgot my password</target>
+      </segment>
+      <segment>
+        <source>login.exception.locked_account</source>
+        <target>This account is locked.</target>
+      </segment>
+      <segment>
+        <source>login.exception.deleted_account</source>
+        <target>Invalid credentials.</target>
+      </segment>
+      <segment>
+        <source>login.register</source>
+        <target>Register</target>
+      </segment>
+    </unit>
+    <unit id="password">
+      <segment>
+        <source>password.request.username.label</source>
+        <target>Username or email</target>
+      </segment>
+      <segment>
+        <source>password.request.username.placeholder</source>
+        <target>Username or email</target>
+      </segment>
+      <segment>
+        <source>password.request.button</source>
+        <target>Reset my password</target>
+      </segment>
+      <segment>
+        <source>password.request.invalid_username</source>
+        <target>Invalid username.</target>
+      </segment>
+      <segment>
+        <source>password.request.already_requested</source>
+        <target>A confirmation email has already been sent to: &lt;a href="mailto://{email}"&gt;{email}&lt;/a&gt;&lt;br
+          /&gt;&lt;br /&gt;
+          &lt;strong&gt;Notes:&lt;/strong&gt;
+          &lt;ul&gt;
+          &lt;li&gt;You can only ask to reset your password every {ttl} hours.&lt;/li&gt;
+          &lt;li&gt;If you do not receive this email, please check your spam folder then try again later.&lt;/li&gt;
+          &lt;/ul&gt;
+        </target>
+      </segment>
+      <segment>
+        <source>password.request.email.subject</source>
+        <target>Password reset request.</target>
+      </segment>
+      <segment>
+        <source>password.request.email.text.body</source>
+        <target>Hello {username},
+
+          You recently applied for resetting your password. To complete the process, please click the link below.
+
+          &lt;a href="{confirmationUrl}"&gt;Reset now my password &lt;/a&gt;
+
+          This link will expire two hours after the sending of this email.
+
+          If you are the author of this application, it is likely that another user entered your email address by
+          mistake and that the security of your account is not compromised.
+
+          Regards,
+
+          The support service.
+        </target>
+      </segment>
+      <segment>
+        <source>password.request.email.html.body</source>
+        <target>&lt;p&gt;Hello {username},
+          &lt;br /&gt;
+          &lt;br /&gt;
+          You recently applied for resetting your password. To complete the process, please click the link below.&lt;br
+          /&gt;
+          &lt;br /&gt;
+          &lt;a href="{confirmationUrl}"&gt;Reset now my password&lt;/a&gt;&lt;br /&gt;
+          &lt;br /&gt;
+          This link will expire two hours after the sending of this email.&lt;br /&gt;
+          &lt;br /&gt;
+          If you are the author of this application, it is likely that another user entered your email address by
+          mistake and that the security of your account is not compromised.&lt;br /&gt;
+          &lt;br /&gt;
+          Regards,&lt;br /&gt;
+          &lt;br /&gt;
+          The support service.&lt;/p&gt;
+        </target>
+      </segment>
+      <segment>
+        <source>password.request.sent</source>
+        <target>A confirmation email has been sent to: &lt;a href="mailto://{email}"&gt;{email}&lt;/a&gt;&lt;br /&gt;&lt;br
+          /&gt;
+          This email contains a link you have to click onto in order to reset your password.&lt;br /&gt;&lt;br /&gt;
+          &lt;strong&gt;Notes:&lt;/strong&gt;
+          &lt;ul&gt;
+          &lt;li&gt;You can only ask to reset your password every {ttl} hours.&lt;/li&gt;
+          &lt;li&gt;If you do not receive this email, please check your spam folder then try again later.&lt;/li&gt;
+          &lt;/ul&gt;
+        </target>
+      </segment>
+      <segment>
+        <source>password.reset.invalid_token</source>
+        <target>Invalid token.</target>
+      </segment>
+      <segment>
+        <source>password.reset.new_password</source>
+        <target>New password</target>
+      </segment>
+      <segment>
+        <source>password.reset.new_password_confirmation</source>
+        <target>New password (confirm)</target>
+      </segment>
+      <segment>
+        <source>password.reset.success</source>
+        <target>Your password has been reset.</target>
+      </segment>
+      <segment>
+        <source>password.reset.password_mismatch</source>
+        <target>Password mismatch.</target>
+      </segment>
+      <segment>
+        <source>password.reset.button</source>
+        <target>Reset my password</target>
+      </segment>
+    </unit>
+    <unit id="registration">
+      <segment>
+        <source>registration.email.label</source>
+        <target>Email</target>
+      </segment>
+      <segment>
+        <source>registration.username.label</source>
+        <target>Username</target>
+      </segment>
+      <segment>
+        <source>registration.plain_password.label</source>
+        <target>Plain password</target>
+      </segment>
+      <segment>
+        <source>registration.submit.button</source>
+        <target>Register</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
