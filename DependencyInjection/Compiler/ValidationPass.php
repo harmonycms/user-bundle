@@ -23,7 +23,7 @@ class ValidationPass implements CompilerPassInterface
     {
         if (class_exists(DoctrineOrmMappingsPass::class)) {
             $container->getDefinition('validator.builder')->addMethodCall('addXmlMapping', [
-                dirname(dirname(__DIR__)) . '/Resources/config/validator/orm.xml'
+                dirname(dirname(__DIR__)) . '/Resources/config/validation/orm.xml'
             ]);
         }
     }
