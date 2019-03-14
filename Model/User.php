@@ -30,7 +30,7 @@ abstract class User implements UserInterface, \Serializable
     /**
      * @var array $roles
      */
-    private $roles = [];
+    private $roles = [self::ROLE_USER];
 
     /**
      * @var \DateTime $passwordRequestedAt
@@ -142,22 +142,21 @@ abstract class User implements UserInterface, \Serializable
     /**
      * Get the value of roles.
      *
-     * @return mixed
+     * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        //        return array_unique(array_merge(['ROLE_USER'], $this->roles));
-        return $this->roles;
+        return array_unique($this->roles);
     }
 
     /**
      * Set the value of roles.
      *
-     * @param mixed $roles
+     * @param array $roles
      *
      * @return User
      */
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
 
@@ -179,9 +178,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $passwordRequestedAt
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt)
+    public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt): UserInterface
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
 
@@ -203,9 +202,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $token
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setResetToken(?string $token)
+    public function setResetToken(?string $token): UserInterface
     {
         $this->resetToken = $token;
 
@@ -313,9 +312,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param null|string $plainPassword
      *
-     * @return $this
+     * @return UserInterface
      */
-    public function setPlainPassword(?string $plainPassword)
+    public function setPlainPassword(?string $plainPassword): UserInterface
     {
         $this->plainPassword = $plainPassword;
 
@@ -389,7 +388,11 @@ abstract class User implements UserInterface, \Serializable
     }
 
     /**
-     * {@inheritdoc}
+     * String representation of object
+     *
+     * @link  https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
      */
     public function serialize()
     {
@@ -404,7 +407,14 @@ abstract class User implements UserInterface, \Serializable
     }
 
     /**
-     * {@inheritdoc}
+     * Constructs the object
+     *
+     * @link  https://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param string $serialized <p>The string representation of the object.</p>
+     *
+     * @return void
+     * @since 5.1.0
      */
     public function unserialize($serialized)
     {

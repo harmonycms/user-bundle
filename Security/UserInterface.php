@@ -4,8 +4,25 @@ namespace Harmony\UserBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
+/**
+ * Interface UserInterface
+ *
+ * @package Harmony\UserBundle\Security
+ */
 interface UserInterface extends BaseUserInterface
 {
+
+    /** Roles constants */
+    const ROLE_USER        = 'ROLE_USER';
+    const ROLE_ADMIN       = 'ROLE_ADMIN';
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
+    /**
+     * Get the value of id.
+     *
+     * @return int
+     */
+    public function getId(): int;
 
     /**
      * Get the value of email.
@@ -28,7 +45,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return self
      */
-    public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt);
+    public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt): self;
 
     /**
      * Returns plain-text password.
@@ -44,7 +61,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return $this
      */
-    public function setPlainPassword(?string $plainPassword);
+    public function setPlainPassword(?string $plainPassword): self;
 
     /**
      * Get the value of reset_token.
@@ -60,7 +77,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return self
      */
-    public function setResetToken(?string $token);
+    public function setResetToken(?string $token): self;
 
     /**
      * Return true if user account is locked.
