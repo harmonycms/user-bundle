@@ -37,7 +37,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="register")
+     * @Route("/register", name="harmony_user_register")
      * @param Request $request
      *
      * @return Response
