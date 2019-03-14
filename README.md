@@ -1,13 +1,5 @@
-# UserBundle 
-
-[![Latest Stable Version](https://poser.pugx.org/damienharper/user-bundle/v/stable)](https://packagist.org/packages/damienharper/user-bundle)
-[![Latest Unstable Version](https://poser.pugx.org/damienharper/user-bundle/v/unstable)](https://packagist.org/packages/damienharper/user-bundle)
-[![Total Downloads](https://poser.pugx.org/damienharper/user-bundle/downloads)](https://packagist.org/packages/damienharper/user-bundle)
-[![License](https://poser.pugx.org/damienharper/user-bundle/license)](https://packagist.org/packages/damienharper/user-bundle)
-[![Monthly Downloads](https://poser.pugx.org/damienharper/user-bundle/d/monthly)](https://packagist.org/packages/damienharper/user-bundle)
-[![Daily Downloads](https://poser.pugx.org/damienharper/user-bundle/d/daily)](https://packagist.org/packages/damienharper/user-bundle)
-
-
+UserBundle
+==========
 This bundle, simple yet convenient, lets you easily add to your application features such as:
 - user authentication
 - password resetting
@@ -87,7 +79,7 @@ Create a file named `dh_user.yaml` in the `config/packages` directory with the f
 
 ```yaml
 # config/packages/dh_user.yaml
-dh_user:
+harmony_user:
     user_class: App\Entity\User         # FQDN name of your user class
     password_reset:
         email_from: john.doe@gmail.com  # Sender of the password reset requests
@@ -128,7 +120,7 @@ security:
 
     providers:
         user_provider:
-            id: harmony_user.user_provider
+            id: Harmony\UserBundle\Security\UserProvider
 
     firewalls:
         dev:
@@ -138,7 +130,7 @@ security:
         main:
             pattern:  ^/
             provider: user_provider
-            user_checker: harmony_user.user_checker
+            user_checker: Harmony\UserBundle\Security\UserChecker
             anonymous:    true
 
             form_login:
@@ -178,8 +170,7 @@ Example of a User class using `ExtendedUserTrait`
 
 namespace App\Entity;
 
-use Harmony\UserBundle\Model\ExtendedUserTrait;
-use Harmony\UserBundle\Security\UserInterface;
+use Harmony\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -191,9 +182,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="email", message="Email already registered.")
  * @UniqueEntity(fields="username", message="Username already registered.")
  */
-class User implements UserInterface, \Serializable
+class User extends BaseUser
 {
-    use ExtendedUserTrait;
 
     /**
      * @ORM\Id
@@ -225,10 +215,6 @@ class User implements UserInterface, \Serializable
 }
 ```
 
-
-
-
 License
 =======
-
 UserBundle is free to use and is licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php)
