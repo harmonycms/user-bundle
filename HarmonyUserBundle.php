@@ -24,7 +24,7 @@ class HarmonyUserBundle extends Bundle
         ];
 
         if (class_exists(DoctrineOrmMappingsPass::class)) {
-            $container->addCompilerPass(DoctrineOrmMappingsPass::createYamlMappingDriver($mappings));
+            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
         }
     }
 }
