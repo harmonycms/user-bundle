@@ -13,7 +13,9 @@ services:
 
     Harmony\UserBundle\Controller\SecurityController: ~
 
-    Harmony\UserBundle\Controller\PasswordController: ~
+    Harmony\UserBundle\Controller\PasswordController:
+      arguments:
+        $resetTokenTtl: '%harmony_user.password_reset.token_ttl%'
 
     Harmony\UserBundle\Event\UserEventSubscriber:
         tags:

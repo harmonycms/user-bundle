@@ -7,6 +7,7 @@ use Harmony\UserBundle\Event\PasswordResetEvent;
 use Harmony\UserBundle\Form\Type\PasswordRequestType;
 use Harmony\UserBundle\Form\Type\PasswordResetType;
 use Harmony\UserBundle\Mailer\TwigSwiftMailer;
+use Harmony\UserBundle\Model\User;
 use Harmony\UserBundle\Security\TokenGenerator;
 use Harmony\UserBundle\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,11 +15,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -29,7 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PasswordController extends AbstractController
 {
 
-    /** @var SessionInterface $session */
+    /** @var SessionInterface|Session $session */
     protected $session;
 
     /** @var TranslatorInterface $translator */
@@ -41,6 +44,12 @@ class PasswordController extends AbstractController
     /** @var TraceableEventDispatcher $eventDispatcher */
     protected $eventDispatcher;
 
+    /** @var UserProviderInterface|UserProvider $userProvider */
+    protected $userProvider;
+
+    /** @var int $resetTokenTtl */
+    protected $resetTokenTtl;
+
     /**
      * PasswordController constructor.
      *
@@ -48,21 +57,28 @@ class PasswordController extends AbstractController
      * @param TranslatorInterface      $translator
      * @param RouterInterface          $router
      * @param EventDispatcherInterface $eventDispatcher
+     * @param UserProviderInterface    $userProvider
+     * @param null|int                 $resetTokenTtl
      */
     public function __construct(SessionInterface $session, TranslatorInterface $translator, RouterInterface $router,
-                                EventDispatcherInterface $eventDispatcher)
+                                EventDispatcherInterface $eventDispatcher, UserProviderInterface $userProvider,
+                                ?int $resetTokenTtl)
     {
         $this->session         = $session;
         $this->translator      = $translator;
         $this->router          = $router;
         $this->eventDispatcher = $eventDispatcher;
+        $this->userProvider    = $userProvider;
+        $this->resetTokenTtl   = $resetTokenTtl;
     }
 
     /**
      * Displays password reset request form.
      * @Route("/lost-password", name="harmony_user_password_request", methods={"GET"})
+     *
+     * @return Response
      */
-    public function requestAction()
+    public function request(): Response
     {
         $form = $this->createForm(PasswordRequestType::class);
 
@@ -75,9 +91,12 @@ class PasswordController extends AbstractController
      * Sends password reset request email.
      * @Route("/lost-password", name="harmony_user_password_request_send", methods={"POST"})
      *
+     * @param Request $request
+     *
+     * @return Response|RedirectResponse
      * @throws \Exception
      */
-    public function sendAction(Request $request)
+    public function send(Request $request)
     {
         $form = $this->createForm(PasswordRequestType::class);
         $form->handleRequest($request);
@@ -91,8 +110,8 @@ class PasswordController extends AbstractController
                         'form' => $form->createView(),
                     ]);
                 }
-
-                $user = $this->get(UserProvider::class)->findUserByUsername($username);
+                /** @var User $user */
+                $user = $this->userProvider->findUserByUsername($username);
             } else {
                 return $this->render('@HarmonyUser/Password/request.html.twig', [
                     'form' => $form->createView(),
@@ -108,11 +127,10 @@ class PasswordController extends AbstractController
             ]);
         }
 
-        $ttl = $this->container->getParameter('harmony_user.password_reset.token_ttl');
-        if (!$user->isPasswordRequestExpired($ttl)) {
+        if (!$user->isPasswordRequestExpired($this->resetTokenTtl)) {
             return $this->render('@HarmonyUser/Password/already_requested.html.twig', [
                 'email' => $user->getEmail(),
-                'ttl'   => $ttl / 60 / 60,
+                'ttl'   => $this->resetTokenTtl / 60 / 60,
             ]);
         }
 
@@ -143,11 +161,14 @@ class PasswordController extends AbstractController
     /**
      * Tells the user to check his email provider.
      * @Route("/lost-password-confirmation", name="harmony_user_password_request_sent", methods={"GET"})
+     *
+     * @param Request $request
+     *
+     * @return Response|RedirectResponse
      */
-    public function sentAction(Request $request)
+    public function sent(Request $request)
     {
         $email = $request->query->get('email');
-        $ttl   = $this->container->getParameter('harmony_user.password_reset.token_ttl');
 
         if (empty($email)) {
             // the user does not come from the sendEmail action
@@ -156,7 +177,7 @@ class PasswordController extends AbstractController
 
         return $this->render('@HarmonyUser/Password/requested.html.twig', [
             'email' => $email,
-            'ttl'   => $ttl / 60 / 60,
+            'ttl'   => $this->resetTokenTtl / 60 / 60,
         ]);
     }
 
@@ -164,11 +185,12 @@ class PasswordController extends AbstractController
      * Resets user password.
      * @Route("/password-reset/{token}", name="harmony_user_password_reset", methods={"GET", "POST"})
      *
-     * @param mixed $token
+     * @param Request $request
+     * @param mixed   $token
      *
      * @return RedirectResponse|Response
      */
-    public function resetAction(Request $request, ?string $token)
+    public function reset(Request $request, ?string $token)
     {
         try {
             $user = $this->get(UserProvider::class)->findUserByResetToken($token);

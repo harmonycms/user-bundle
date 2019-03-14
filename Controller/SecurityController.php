@@ -5,6 +5,7 @@ namespace Harmony\UserBundle\Controller;
 use Harmony\UserBundle\Exception\PasswordResetRequiredException;
 use Harmony\UserBundle\Form\Type\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -44,6 +45,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login", name="harmony_user_login", methods={"GET", "POST"})
+     * @return Response
      */
     public function login()
     {
@@ -76,6 +78,8 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/logout", name="harmony_user_logout")
+     * @return void
+     * @throws \Exception
      */
     public function logout(): void
     {
