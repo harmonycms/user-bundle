@@ -1,6 +1,7 @@
 UserBundle
 ==========
 This bundle, simple yet convenient, lets you easily add to your application features such as:
+- user registration
 - user authentication
 - password resetting
 - user account locking
