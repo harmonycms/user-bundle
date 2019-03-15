@@ -1,16 +1,16 @@
 <?php
 
-namespace Harmony\UserBundle;
+namespace Harmony\Bundle\UserBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Harmony\UserBundle\DependencyInjection\Compiler\ValidationPass;
+use Harmony\Bundle\UserBundle\DependencyInjection\Compiler\ValidationPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class HarmonyUserBundle
  *
- * @package Harmony\UserBundle
+ * @package Harmony\Bundle\UserBundle
  */
 class HarmonyUserBundle extends Bundle
 {
@@ -25,7 +25,7 @@ class HarmonyUserBundle extends Bundle
     {
         $container->addCompilerPass(new ValidationPass());
 
-        $mappings = [realpath(__DIR__ . '/Resources/config/doctrine-mapping') => 'Harmony\UserBundle\Model'];
+        $mappings = [realpath(__DIR__ . '/Resources/config/doctrine-mapping') => 'Harmony\Bundle\UserBundle\Model'];
         if (class_exists(DoctrineOrmMappingsPass::class)) {
             $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Model;
+namespace Harmony\Bundle\UserBundle\Model;
 
 use Exception;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Class UserManager
  *
- * @package Harmony\UserBundle\Model
+ * @package Harmony\Bundle\UserBundle\Model
  */
 class UserManager
 {

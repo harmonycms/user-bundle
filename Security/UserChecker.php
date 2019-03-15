@@ -1,11 +1,11 @@
 <?php
 
-namespace Harmony\UserBundle\Security;
+namespace Harmony\Bundle\UserBundle\Security;
 
-use Harmony\UserBundle\Exception\AccountDeletedException;
-use Harmony\UserBundle\Exception\AccountLockedException;
-use Harmony\UserBundle\Exception\PasswordResetRequiredException;
-use Harmony\UserBundle\Model\User;
+use Harmony\Bundle\UserBundle\Exception\AccountDeletedException;
+use Harmony\Bundle\UserBundle\Exception\AccountLockedException;
+use Harmony\Bundle\UserBundle\Exception\PasswordResetRequiredException;
+use Harmony\Bundle\UserBundle\Model\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;

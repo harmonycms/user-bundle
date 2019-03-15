@@ -1,9 +1,9 @@
 <?php
 
-namespace Harmony\UserBundle\Controller;
+namespace Harmony\Bundle\UserBundle\Controller;
 
-use Harmony\UserBundle\Exception\PasswordResetRequiredException;
-use Harmony\UserBundle\Form\Type\LoginType;
+use Harmony\Bundle\UserBundle\Exception\PasswordResetRequiredException;
+use Harmony\Bundle\UserBundle\Form\Type\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -14,7 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class SecurityController
  *
- * @package Harmony\UserBundle\Controller
+ * @package Harmony\Bundle\UserBundle\Controller
  */
 class SecurityController extends AbstractController
 {
@@ -54,7 +54,7 @@ class SecurityController extends AbstractController
         if (null !== $lastError) {
             if ($lastError instanceof PasswordResetRequiredException) {
                 // password reset required: we forward the user to the reset password form
-                return $this->forward('Harmony\UserBundle\Controller\PasswordController::resetAction',
+                return $this->forward('Harmony\Bundle\UserBundle\Controller\PasswordController::resetAction',
                     ['token' => $lastError->getResetToken()]);
             }
 

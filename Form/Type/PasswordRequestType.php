@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Form\Type;
+namespace Harmony\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Class PasswordRequestType
  *
- * @package Harmony\UserBundle\Form\Type
+ * @package Harmony\Bundle\UserBundle\Form\Type
  */
 class PasswordRequestType extends AbstractType
 {

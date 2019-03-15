@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Mailer;
+namespace Harmony\Bundle\UserBundle\Mailer;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -9,7 +9,7 @@ use Twig\Environment;
 /**
  * Class TwigSwiftMailer
  *
- * @package Harmony\UserBundle\Mailer
+ * @package Harmony\Bundle\UserBundle\Mailer
  */
 class TwigSwiftMailer
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace Harmony\UserBundle\Controller;
+namespace Harmony\Bundle\UserBundle\Controller;
 
-use Harmony\UserBundle\Event\PasswordRequestEvent;
-use Harmony\UserBundle\Event\PasswordResetEvent;
-use Harmony\UserBundle\Form\Type\PasswordRequestType;
-use Harmony\UserBundle\Form\Type\PasswordResetType;
-use Harmony\UserBundle\Mailer\TwigSwiftMailer;
-use Harmony\UserBundle\Model\User;
-use Harmony\UserBundle\Security\TokenGenerator;
-use Harmony\UserBundle\Security\UserProvider;
+use Harmony\Bundle\UserBundle\Event\PasswordRequestEvent;
+use Harmony\Bundle\UserBundle\Event\PasswordResetEvent;
+use Harmony\Bundle\UserBundle\Form\Type\PasswordRequestType;
+use Harmony\Bundle\UserBundle\Form\Type\PasswordResetType;
+use Harmony\Bundle\UserBundle\Mailer\TwigSwiftMailer;
+use Harmony\Bundle\UserBundle\Model\User;
+use Harmony\Bundle\UserBundle\Security\TokenGenerator;
+use Harmony\Bundle\UserBundle\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,7 +27,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class PasswordController
  *
- * @package Harmony\UserBundle\Controller
+ * @package Harmony\Bundle\UserBundle\Controller
  */
 class PasswordController extends AbstractController
 {

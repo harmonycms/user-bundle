@@ -1,11 +1,11 @@
 <?php
 
-namespace Harmony\UserBundle\Security;
+namespace Harmony\Bundle\UserBundle\Security;
 
 /**
  * Class TokenGenerator
  *
- * @package Harmony\UserBundle\Security
+ * @package Harmony\Bundle\UserBundle\Security
  */
 class TokenGenerator
 {

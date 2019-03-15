@@ -1,13 +1,13 @@
 <?php
 
-namespace Harmony\UserBundle\Model;
+namespace Harmony\Bundle\UserBundle\Model;
 
-use Harmony\UserBundle\Security\UserInterface;
+use Harmony\Bundle\UserBundle\Security\UserInterface;
 
 /**
  * Class User
  *
- * @package Harmony\UserBundle\Model
+ * @package Harmony\Bundle\UserBundle\Model
  */
 abstract class User implements UserInterface, \Serializable
 {

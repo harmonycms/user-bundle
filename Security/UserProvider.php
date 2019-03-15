@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Security;
+namespace Harmony\Bundle\UserBundle\Security;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  * Class UserProvider
  *
  * @see     https://symfony.com/doc/current/security/user_provider.html#creating-a-custom-user-provider
- * @package Harmony\UserBundle\Security
+ * @package Harmony\Bundle\UserBundle\Security
  */
 class UserProvider implements UserProviderInterface
 {

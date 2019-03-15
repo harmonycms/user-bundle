@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\DependencyInjection;
+namespace Harmony\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * Class HarmonyUserExtension
  *
- * @package Harmony\UserBundle\DependencyInjection
+ * @package Harmony\Bundle\UserBundle\DependencyInjection
  */
 class HarmonyUserExtension extends Extension
 {

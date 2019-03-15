@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Form\Type;
+namespace Harmony\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Class LoginType
  *
- * @package Harmony\UserBundle\Form\Type
+ * @package Harmony\Bundle\UserBundle\Form\Type
  */
 class LoginType extends AbstractType
 {

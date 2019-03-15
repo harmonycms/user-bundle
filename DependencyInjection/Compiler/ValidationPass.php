@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\DependencyInjection\Compiler;
+namespace Harmony\Bundle\UserBundle\DependencyInjection\Compiler;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 /**
  * Class ValidationPass
  *
- * @package Harmony\UserBundle\DependencyInjection\Compiler
+ * @package Harmony\Bundle\UserBundle\DependencyInjection\Compiler
  */
 class ValidationPass implements CompilerPassInterface
 {

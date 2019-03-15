@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Event;
+namespace Harmony\Bundle\UserBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Class UserEvent
  *
- * @package Harmony\UserBundle\Event
+ * @package Harmony\Bundle\UserBundle\Event
  */
 class UserEvent extends Event
 {

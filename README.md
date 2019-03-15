@@ -60,7 +60,7 @@ security:
 
     providers:
         user_provider:
-            id: Harmony\UserBundle\Security\UserProvider
+            id: Harmony\Bundle\UserBundle\Security\UserProvider
 
     firewalls:
         dev:
@@ -70,7 +70,7 @@ security:
         main:
             pattern:  ^/
             provider: user_provider
-            user_checker: Harmony\UserBundle\Security\UserChecker
+            user_checker: Harmony\Bundle\UserBundle\Security\UserChecker
             anonymous:    true
 
             form_login:
@@ -91,7 +91,7 @@ security:
 
 ## Step 4: User class
 This bundle provide a default entity class `App\Entity\User`, configured by a Symfony recipe.
-This class already extends the abstract mapped entity `Harmony\UserBundle\Model\User` with the following content:
+This class already extends the abstract mapped entity `Harmony\Bundle\UserBundle\Model\User` with the following content:
 
 ```php
 <?php
@@ -99,7 +99,7 @@ This class already extends the abstract mapped entity `Harmony\UserBundle\Model\
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Harmony\UserBundle\Model\User as BaseUser;
+use Harmony\Bundle\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 

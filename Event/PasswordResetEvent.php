@@ -1,11 +1,11 @@
 <?php
 
-namespace Harmony\UserBundle\Event;
+namespace Harmony\Bundle\UserBundle\Event;
 
 /**
  * Class PasswordResetEvent
  *
- * @package Harmony\UserBundle\Event
+ * @package Harmony\Bundle\UserBundle\Event
  */
 class PasswordResetEvent extends UserEvent
 {

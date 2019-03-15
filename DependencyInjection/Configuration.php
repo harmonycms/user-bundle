@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\DependencyInjection;
+namespace Harmony\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

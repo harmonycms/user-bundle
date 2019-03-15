@@ -1,13 +1,13 @@
 <?php
 
-namespace Harmony\UserBundle\Security;
+namespace Harmony\Bundle\UserBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 /**
  * Interface UserInterface
  *
- * @package Harmony\UserBundle\Security
+ * @package Harmony\Bundle\UserBundle\Security
  */
 interface UserInterface extends BaseUserInterface
 {

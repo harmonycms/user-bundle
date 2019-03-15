@@ -1,9 +1,9 @@
 <?php
 
-namespace Harmony\UserBundle\Controller;
+namespace Harmony\Bundle\UserBundle\Controller;
 
-use Harmony\UserBundle\Form\Type\RegistrationFormType;
-use Harmony\UserBundle\Model\UserManager;
+use Harmony\Bundle\UserBundle\Form\Type\RegistrationFormType;
+use Harmony\Bundle\UserBundle\Model\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * Class RegistrationController
  *
- * @package Harmony\UserBundle\Controller
+ * @package Harmony\Bundle\UserBundle\Controller
  */
 class RegistrationController extends AbstractController
 {

@@ -6,28 +6,28 @@ services:
         bind:
             $userClass: '%harmony_user.user_class%'
 
-    Harmony\UserBundle\Security\UserProvider:
+    Harmony\Bundle\UserBundle\Security\UserProvider:
         public: false
 
-    Harmony\UserBundle\Form\Type\RegistrationFormType: ~
+    Harmony\Bundle\UserBundle\Form\Type\RegistrationFormType: ~
 
-    Harmony\UserBundle\Model\UserManager: ~
+    Harmony\Bundle\UserBundle\Model\UserManager: ~
 
-    Harmony\UserBundle\Controller\RegistrationController: ~
+    Harmony\Bundle\UserBundle\Controller\RegistrationController: ~
 
-    Harmony\UserBundle\Controller\SecurityController: ~
+    Harmony\Bundle\UserBundle\Controller\SecurityController: ~
 
-    Harmony\UserBundle\Controller\PasswordController:
+    Harmony\Bundle\UserBundle\Controller\PasswordController:
         arguments:
             $resetTokenTtl: '%harmony_user.password_reset.token_ttl%'
 
-    Harmony\UserBundle\Event\UserEventSubscriber:
+    Harmony\Bundle\UserBundle\Event\UserEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    Harmony\UserBundle\Security\UserChecker: ~
+    Harmony\Bundle\UserBundle\Security\UserChecker: ~
 
-    Harmony\UserBundle\Mailer\TwigSwiftMailer:
+    Harmony\Bundle\UserBundle\Mailer\TwigSwiftMailer:
         arguments:
             $mailer: '@mailer'
             $parameters: { email_from: '%harmony_user.password_reset.email_from%' }

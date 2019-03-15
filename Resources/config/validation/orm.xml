@@ -4,7 +4,7 @@
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                       http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-  <class name="Harmony\UserBundle\Model\User">
+  <class name="Harmony\Bundle\UserBundle\Model\User">
     <property name="username">
       <constraint name="NotBlank"/>
     </property>

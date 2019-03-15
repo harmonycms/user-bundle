@@ -1,6 +1,6 @@
 <?php
 
-namespace Harmony\UserBundle\Form\Type;
+namespace Harmony\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * Class RegistrationFormType
  *
- * @package Harmony\UserBundle\Form\Type
+ * @package Harmony\Bundle\UserBundle\Form\Type
  */
 class RegistrationFormType extends AbstractType
 {

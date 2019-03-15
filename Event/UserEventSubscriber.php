@@ -1,16 +1,16 @@
 <?php
 
-namespace Harmony\UserBundle\Event;
+namespace Harmony\Bundle\UserBundle\Event;
 
-use Harmony\UserBundle\Model\UserManager;
-use Harmony\UserBundle\Security\UserInterface;
+use Harmony\Bundle\UserBundle\Model\UserManager;
+use Harmony\Bundle\UserBundle\Security\UserInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
  * Class UserEventSubscriber
  *
- * @package Harmony\UserBundle\Event
+ * @package Harmony\Bundle\UserBundle\Event
  */
 class UserEventSubscriber implements EventSubscriber
 {

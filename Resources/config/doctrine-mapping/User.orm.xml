@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-  <mapped-superclass name="Harmony\UserBundle\Model\User">
+  <mapped-superclass name="Harmony\Bundle\UserBundle\Model\User">
 
     <field name="username" column="username" unique="true"/>
 

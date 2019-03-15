@@ -1,13 +1,13 @@
 <?php
 
-namespace Harmony\UserBundle\Exception;
+namespace Harmony\Bundle\UserBundle\Exception;
 
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
 /**
  * Class AccountDeletedException
  *
- * @package Harmony\UserBundle\Exception
+ * @package Harmony\Bundle\UserBundle\Exception
  */
 class AccountDeletedException extends AccountStatusException
 {
