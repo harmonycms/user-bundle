@@ -5,6 +5,7 @@ namespace Harmony\UserBundle\Security;
 use Harmony\UserBundle\Exception\AccountDeletedException;
 use Harmony\UserBundle\Exception\AccountLockedException;
 use Harmony\UserBundle\Exception\PasswordResetRequiredException;
+use Harmony\UserBundle\Model\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -15,13 +16,26 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserChecker implements UserCheckerInterface
 {
+
     private $registry;
 
+    /**
+     * UserChecker constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
     }
 
+    /**
+     * Checks the user account before authentication.
+     *
+     * @param UserInterface|User $user
+     *
+     * @throws \Exception
+     */
     public function checkPreAuth(UserInterface $user)
     {
         // user is deleted, show a generic Account Not Found message.
@@ -55,6 +69,11 @@ class UserChecker implements UserCheckerInterface
         }
     }
 
+    /**
+     * Checks the user account after authentication.
+     *
+     * @param UserInterface $user
+     */
     public function checkPostAuth(UserInterface $user)
     {
     }
