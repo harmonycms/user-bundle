@@ -4,8 +4,14 @@ namespace Harmony\UserBundle\Exception;
 
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
+/**
+ * Class PasswordResetRequiredException
+ *
+ * @package Harmony\UserBundle\Exception
+ */
 class PasswordResetRequiredException extends AccountStatusException
 {
+
     /**
      * @var string
      */
@@ -32,7 +38,9 @@ class PasswordResetRequiredException extends AccountStatusException
     }
 
     /**
-     * {@inheritdoc}
+     * Message key to be used by the translation component.
+     *
+     * @return string
      */
     public function getMessageKey()
     {
@@ -40,7 +48,11 @@ class PasswordResetRequiredException extends AccountStatusException
     }
 
     /**
-     * {@inheritdoc}
+     * String representation of object
+     *
+     * @link  https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
      */
     public function serialize()
     {
@@ -51,7 +63,14 @@ class PasswordResetRequiredException extends AccountStatusException
     }
 
     /**
-     * {@inheritdoc}
+     * Constructs the object
+     *
+     * @link  https://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param $str
+     *
+     * @return void
+     * @since 5.1.0
      */
     public function unserialize($str)
     {

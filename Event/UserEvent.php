@@ -5,9 +5,18 @@ namespace Harmony\UserBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class UserEvent
+ *
+ * @package Harmony\UserBundle\Event
+ */
 class UserEvent extends Event
 {
+
+    /** @var UserInterface $user */
     protected $user;
+
+    /** @var array|null $data */
     protected $data;
 
     /**
