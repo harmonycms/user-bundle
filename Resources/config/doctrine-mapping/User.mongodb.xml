@@ -4,36 +4,17 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-  <mapped-superclass name="Harmony\Bundle\UserBundle\Model\User">
-
-    <field name="username" fieldName="username" type="string" unique="true"/>
-
-    <field name="password" fieldName="password" type="string"/>
-
-    <field name="email" fieldName="email" type="string"/>
-
-    <field name="roles" fieldName="roles" type="collection"/>
-
-    <field name="passwordRequestedAt" fieldName="password_requested_at" type="date" nullable="true"/>
-
-    <field name="resetToken" fieldName="reset_token" type="string" nullable="true"/>
-
-    <field name="expiredAt" fieldName="expired_at" type="date" nullable="true"/>
-
-    <field name="deletedAt" fieldName="deleted_at" type="date" nullable="true"/>
-
-    <field name="isLocked" fieldName="is_locked" type="boolean">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-
-    <field name="isPasswordResetRequired" fieldName="is_password_reset_required" type="boolean">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-
-  </mapped-superclass>
+    <mapped-superclass name="Harmony\Bundle\UserBundle\Model\User">
+        <field name="username" fieldName="username" type="string" unique="true"/>
+        <field name="password" fieldName="password" type="string"/>
+        <field name="email" fieldName="email" type="string"/>
+        <field name="roles" fieldName="roles" type="collection"/>
+        <field name="password_requested_at" fieldName="passwordRequestedAt" type="date" nullable="true"/>
+        <field name="reset_token" fieldName="resetToken" type="string" nullable="true"/>
+        <field name="expired_at" fieldName="expiredAt" type="date" nullable="true"/>
+        <field name="deleted_at" fieldName="deletedAt" type="date" nullable="true"/>
+        <field name="is_locked" fieldName="isLocked" type="boolean"/>
+        <field name="is_password_reset_required" fieldName="isPasswordResetRequired" type="boolean"/>
+    </mapped-superclass>
 
 </doctrine-mongo-mapping>
