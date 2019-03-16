@@ -2,11 +2,11 @@
 
 namespace Harmony\Bundle\UserBundle\Security;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Harmony\Bundle\UserBundle\Exception\AccountDeletedException;
 use Harmony\Bundle\UserBundle\Exception\AccountLockedException;
 use Harmony\Bundle\UserBundle\Exception\PasswordResetRequiredException;
 use Harmony\Bundle\UserBundle\Model\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,9 +22,9 @@ class UserChecker implements UserCheckerInterface
     /**
      * UserChecker constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

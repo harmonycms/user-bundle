@@ -2,7 +2,7 @@
 
 namespace Harmony\Bundle\UserBundle\Security;
 
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class UserProvider implements UserProviderInterface
 {
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     private $registry;
 
     /** @var EncoderFactoryInterface $encoder */
@@ -30,11 +30,11 @@ class UserProvider implements UserProviderInterface
     /**
      * UserProvider constructor.
      *
-     * @param RegistryInterface       $registry
+     * @param ManagerRegistry         $registry
      * @param EncoderFactoryInterface $encoder
      * @param                         $userClass
      */
-    public function __construct(RegistryInterface $registry, EncoderFactoryInterface $encoder, $userClass)
+    public function __construct(ManagerRegistry $registry, EncoderFactoryInterface $encoder, $userClass)
     {
         $this->registry  = $registry;
         $this->encoder   = $encoder;
