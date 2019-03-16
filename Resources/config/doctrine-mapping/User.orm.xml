@@ -4,36 +4,25 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-  <mapped-superclass name="Harmony\Bundle\UserBundle\Model\User">
-
-    <field name="username" column="username" unique="true"/>
-
-    <field name="password" column="password" length="64"/>
-
-    <field name="email" column="email" unique="true"/>
-
-    <field name="roles" column="roles" type="array"/>
-
-    <field name="passwordRequestedAt" column="password_requested_at" type="datetime" nullable="true"/>
-
-    <field name="resetToken" column="reset_token" length="255" nullable="true"/>
-
-    <field name="expiredAt" column="expired_at" type="datetime" nullable="true"/>
-
-    <field name="deletedAt" column="deleted_at" type="datetime" nullable="true"/>
-
-    <field name="isLocked" column="is_locked" type="boolean">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-
-    <field name="isPasswordResetRequired" column="is_password_reset_required" type="boolean">
-      <options>
-        <option name="default">0</option>
-      </options>
-    </field>
-
-  </mapped-superclass>
+    <mapped-superclass name="Harmony\Bundle\UserBundle\Model\User">
+        <field name="username" column="username" unique="true"/>
+        <field name="password" column="password" length="64"/>
+        <field name="email" column="email" unique="true"/>
+        <field name="roles" column="roles" type="array"/>
+        <field name="passwordRequestedAt" column="password_requested_at" type="datetime" nullable="true"/>
+        <field name="resetToken" column="reset_token" length="255" nullable="true"/>
+        <field name="expiredAt" column="expired_at" type="datetime" nullable="true"/>
+        <field name="deletedAt" column="deleted_at" type="datetime" nullable="true"/>
+        <field name="isLocked" column="is_locked" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="isPasswordResetRequired" column="is_password_reset_required" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+    </mapped-superclass>
 
 </doctrine-mapping>
