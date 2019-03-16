@@ -2,6 +2,7 @@
 
 namespace Harmony\Bundle\UserBundle\DependencyInjection;
 
+use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -31,11 +32,17 @@ class HarmonyUserExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
-        $container->setParameter('harmony_user.user_class',
-            isset($config['user_class']) ? $config['user_class'] : null);
+        $userClass = null;
+        if ($container->has('doctrine.orm.default_entity_manager')) {
+            $userClass = $config['user_orm_class'] ?? null;
+        } elseif (\class_exists(DoctrineMongoDBMappingsPass::class)) {
+            $userClass = $config['user_mongodb_class'] ?? null;
+        }
+
+        $container->setParameter('harmony_user.user_class', $userClass);
         $container->setParameter('harmony_user.password_reset.email_from',
-            isset($config['password_reset']['email_from']) ? $config['password_reset']['email_from'] : null);
+            $config['password_reset']['email_from'] ?? null);
         $container->setParameter('harmony_user.password_reset.token_ttl',
-            isset($config['password_reset']['token_ttl']) ? $config['password_reset']['token_ttl'] : null);
+            $config['password_reset']['token_ttl'] ?? null);
     }
 }

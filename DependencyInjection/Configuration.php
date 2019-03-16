@@ -22,9 +22,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('user_class')
+                ->scalarNode('user_orm_class')
                     ->info('User entity class (FQDN)')
                     ->defaultValue('App\Entity\User')
+                ->end()
+                ->scalarNode('user_mongodb_class')
+                    ->info('User MongoDB class (FQDN)')
+                    ->defaultValue('App\Document\User')
                 ->end()
                 ->arrayNode('password_reset')
                     ->children()
