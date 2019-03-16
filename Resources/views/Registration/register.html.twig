@@ -3,5 +3,14 @@
 {% trans_default_domain 'UserBundle' %}
 
 {% block harmony_user_body %}
-  {{ form(form) }}
+  {{ form_start(form) }}
+  {{ form_row(form.email) }}
+  {{ form_row(form.username) }}
+  {{ form_row(form.plainPassword.first) }}
+  {{ form_row(form.plainPassword.second) }}
+  <div>
+    {{ form_widget(form._token) }}
+    <button type="submit">{{ 'registration.submit.button'|trans }}</button>
+  </div>
+  {{ form_end(form) }}
 {% endblock harmony_user_body %}

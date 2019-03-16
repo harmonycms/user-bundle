@@ -152,12 +152,32 @@
         <target>Email</target>
       </segment>
       <segment>
+        <source>registration.email.placeholder</source>
+        <target>Email</target>
+      </segment>
+      <segment>
         <source>registration.username.label</source>
         <target>Username</target>
       </segment>
       <segment>
+        <source>registration.username.placeholder</source>
+        <target>Username</target>
+      </segment>
+      <segment>
         <source>registration.plain_password.label</source>
-        <target>Plain password</target>
+        <target>Password</target>
+      </segment>
+      <segment>
+        <source>registration.plain_password.placeholder</source>
+        <target>Password</target>
+      </segment>
+      <segment>
+        <source>registration.password_confirmation.label</source>
+        <target>Confirm password</target>
+      </segment>
+      <segment>
+        <source>registration.password_confirmation.placeholder</source>
+        <target>Confirm password</target>
       </segment>
       <segment>
         <source>registration.submit.button</source>

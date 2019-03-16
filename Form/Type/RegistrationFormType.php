@@ -5,7 +5,7 @@ namespace Harmony\Bundle\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,27 +47,36 @@ class RegistrationFormType extends AbstractType
     {
         $builder->add('email', EmailType::class, [
             'label'              => 'registration.email.label',
-            'translation_domain' => 'UserBundle'
+            'translation_domain' => 'UserBundle',
+            'attr'               => ['placeholder' => 'registration.email.placeholder']
         ])->add('username', TextType::class, [
             'label'              => 'registration.username.label',
-            'translation_domain' => 'UserBundle'
-        ])->add('plainPassword', PasswordType::class, [
-            // instead of being set onto the object directly,
-            // this is read and encoded in the controller
-            'label'              => 'registration.plain_password.label',
             'translation_domain' => 'UserBundle',
-            'mapped'             => false,
-            'constraints'        => [
-                new NotBlank(['message' => 'Please enter a password']),
-                new Length([
-                    'min'        => 6,
-                    'minMessage' => 'Your password should be at least {{ limit }} characters',
-                    'max'        => 4096
-                ])
-            ]
-        ])->add('submit', SubmitType::class, [
-            'label'              => 'registration.submit.button',
-            'translation_domain' => 'UserBundle'
+            'attr'               => ['placeholder' => 'registration.username.placeholder']
+        ])->add('plainPassword', RepeatedType::class, [
+            'type'            => PasswordType::class,
+            'mapped'          => false,
+            'options'         => [
+                'translation_domain' => 'UserBundle',
+                'attr'               => ['autocomplete' => 'new-password'],
+                'constraints'        => [
+                    new NotBlank(['message' => 'Please enter a password']),
+                    new Length([
+                        'min'        => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'max'        => 4096
+                    ])
+                ]
+            ],
+            'first_options'   => [
+                'label' => 'registration.plain_password.label',
+                'attr'  => ['placeholder' => 'registration.plain_password.placeholder']
+            ],
+            'second_options'  => [
+                'label' => 'registration.password_confirmation.label',
+                'attr'  => ['placeholder' => 'registration.password_confirmation.placeholder']
+            ],
+            'invalid_message' => 'fos_user.password.mismatch'
         ]);
     }
 
