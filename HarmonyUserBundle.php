@@ -26,7 +26,7 @@ class HarmonyUserBundle extends Bundle
         $container->addCompilerPass(new ValidationPass());
 
         $mappings = [realpath(__DIR__ . '/Resources/config/doctrine-mapping') => 'Harmony\Bundle\UserBundle\Model'];
-        if (class_exists(DoctrineOrmMappingsPass::class)) {
+        if (class_exists(DoctrineOrmMappingsPass::class) && $container->has('doctrine.orm.default_entity_manager')) {
             $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
         }
     }
