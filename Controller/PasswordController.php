@@ -62,7 +62,7 @@ class PasswordController extends AbstractController
      */
     public function __construct(SessionInterface $session, TranslatorInterface $translator, RouterInterface $router,
                                 EventDispatcherInterface $eventDispatcher, UserProviderInterface $userProvider,
-                                ?int $resetTokenTtl)
+                                int $resetTokenTtl)
     {
         $this->session         = $session;
         $this->translator      = $translator;
