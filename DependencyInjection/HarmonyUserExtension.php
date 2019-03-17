@@ -37,10 +37,10 @@ class HarmonyUserExtension extends Extension
         $bundles = $container->getParameter('kernel.bundles');
 
         $userClass = null;
-        if (\class_exists(DoctrineOrmMappingsPass::class) && isset($bundles['DoctrineBundle'])) {
-            $userClass = $config['user_orm_class'] ?? null;
-        } elseif (\class_exists(DoctrineMongoDBMappingsPass::class) && isset($bundles['DoctrineMongoDBBundle'])) {
+        if (\class_exists(DoctrineMongoDBMappingsPass::class) && isset($bundles['DoctrineMongoDBBundle'])) {
             $userClass = $config['user_mongodb_class'] ?? null;
+        } elseif (\class_exists(DoctrineOrmMappingsPass::class) && isset($bundles['DoctrineBundle'])) {
+            $userClass = $config['user_orm_class'] ?? null;
         }
 
         $container->setParameter('harmony_user.user_class', $userClass);
