@@ -50,6 +50,9 @@ class PasswordController extends AbstractController
     /** @var int $resetTokenTtl */
     protected $resetTokenTtl;
 
+    /** @var TwigSwiftMailer $mailer */
+    protected $mailer;
+
     /**
      * PasswordController constructor.
      *
@@ -58,17 +61,19 @@ class PasswordController extends AbstractController
      * @param RouterInterface          $router
      * @param EventDispatcherInterface $eventDispatcher
      * @param UserProviderInterface    $userProvider
+     * @param TwigSwiftMailer          $mailer
      * @param null|int                 $resetTokenTtl
      */
     public function __construct(SessionInterface $session, TranslatorInterface $translator, RouterInterface $router,
                                 EventDispatcherInterface $eventDispatcher, UserProviderInterface $userProvider,
-                                int $resetTokenTtl)
+                                TwigSwiftMailer $mailer, int $resetTokenTtl)
     {
         $this->session         = $session;
         $this->translator      = $translator;
         $this->router          = $router;
         $this->eventDispatcher = $eventDispatcher;
         $this->userProvider    = $userProvider;
+        $this->mailer          = $mailer;
         $this->resetTokenTtl   = $resetTokenTtl;
     }
 
@@ -138,8 +143,7 @@ class PasswordController extends AbstractController
             $user->setResetToken(TokenGenerator::generateToken());
         }
 
-        $mailer = $this->get(TwigSwiftMailer::class);
-        $mailer->sendResetMessage($user);
+        $this->mailer->sendResetMessage($user);
 
         $user->setPasswordRequestedAt(new \DateTime());
         $this->getDoctrine()->getManager()->persist($user);
