@@ -26,12 +26,15 @@ class HarmonyUserBundle extends Bundle
     {
         $container->addCompilerPass(new ValidationPass());
 
+        // get all bundles
+        $bundles = $container->getParameter('kernel.bundles');
+
         $mappings = [realpath(__DIR__ . '/Resources/config/doctrine-mapping') => 'Harmony\Bundle\UserBundle\Model'];
-        if (\class_exists(DoctrineOrmMappingsPass::class) && $container->has('doctrine.orm.default_entity_manager')) {
+        if (\class_exists(DoctrineOrmMappingsPass::class) && isset($bundles['DoctrineBundle'])) {
             $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
         }
 
-        if (\class_exists(DoctrineMongoDBMappingsPass::class) && $container->has('doctrine_mongodb.odm.default_document_manager')) {
+        if (\class_exists(DoctrineMongoDBMappingsPass::class) && isset($bundles['DoctrineMongoDBBundle'])) {
             $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver($mappings, []));
         }
     }

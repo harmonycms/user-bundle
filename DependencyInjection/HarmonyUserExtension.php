@@ -2,6 +2,7 @@
 
 namespace Harmony\Bundle\UserBundle\DependencyInjection;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -32,10 +33,13 @@ class HarmonyUserExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
+        // get all bundles
+        $bundles = $container->getParameter('kernel.bundles');
+
         $userClass = null;
-        if ($container->has('doctrine.orm.default_entity_manager')) {
+        if (\class_exists(DoctrineOrmMappingsPass::class) && isset($bundles['DoctrineBundle'])) {
             $userClass = $config['user_orm_class'] ?? null;
-        } elseif (\class_exists(DoctrineMongoDBMappingsPass::class)) {
+        } elseif (\class_exists(DoctrineMongoDBMappingsPass::class) && isset($bundles['DoctrineMongoDBBundle'])) {
             $userClass = $config['user_mongodb_class'] ?? null;
         }
 
