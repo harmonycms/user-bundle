@@ -31,7 +31,7 @@ class HarmonyUserBundle extends Bundle
             $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
         }
 
-        if (\class_exists(DoctrineMongoDBMappingsPass::class)) {
+        if (\class_exists(DoctrineMongoDBMappingsPass::class) && $container->has('doctrine_mongodb.odm.default_document_manager')) {
             $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver($mappings, []));
         }
     }
