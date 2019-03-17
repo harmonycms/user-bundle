@@ -2,6 +2,7 @@
 
 namespace Harmony\Bundle\UserBundle\Security;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -63,15 +64,17 @@ class UserProvider implements UserProviderInterface
      */
     public function findUserByUsername(string $username): UserInterface
     {
-        $user = $this->registry->getRepository($this->userClass)
-            ->createQueryBuilder('u')
-            ->where('u.username = :username OR u.email = :email')
-            ->setParameter('username', $username)
-            ->setParameter('email', $username)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $criteria = new Criteria();
+        $criteria
+            ->orWhere($criteria->expr()->contains('username', $username))
+            ->orWhere($criteria->expr()->contains('email', $username));
 
-        if (null === $user) {
+        $user = $this->registry
+            ->getRepository($this->userClass)
+            ->matching($criteria)
+            ->first();
+
+        if (false === $user) {
             throw new UsernameNotFoundException();
         }
 
@@ -85,12 +88,7 @@ class UserProvider implements UserProviderInterface
      */
     public function findUserByResetToken(string $token): UserInterface
     {
-        $user = $this->registry->getRepository($this->userClass)
-            ->createQueryBuilder('u')
-            ->where('u.reset_token = :token')
-            ->setParameter('token', $token)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $user = $this->registry->getRepository($this->userClass)->findOneBy(['reset_token' => $token]);
 
         if (null === $user) {
             throw new UsernameNotFoundException();
