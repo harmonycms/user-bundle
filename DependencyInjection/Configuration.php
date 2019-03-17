@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('App\Document\User')
                 ->end()
                 ->arrayNode('password_reset')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('email_from')
                             ->info('Sender of password reset emails')
