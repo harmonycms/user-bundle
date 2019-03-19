@@ -20,9 +20,9 @@ interface UserInterface extends BaseUserInterface
     /**
      * Get the value of id.
      *
-     * @return int
+     * @return int|string
      */
-    public function getId(): int;
+    public function getId();
 
     /**
      * Get the value of email.
