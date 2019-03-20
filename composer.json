@@ -26,5 +26,10 @@
     "psr-4": {
       "Harmony\\Bundle\\UserBundle\\": ""
     }
+  },
+  "extra": {
+    "symfony": {
+      "id": "01D6ERKYXFJAQWQKNFXXHZJ5R5"
+    }
   }
 }
