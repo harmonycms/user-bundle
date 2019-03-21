@@ -20,7 +20,7 @@
     "symfony/validator": "^4.2"
   },
   "suggest": {
-    "symfony/orm-pack": "A Symfony Pack for Doctrine ORM",
+    "emulienfou/orm-pack": "A Symfony Pack for Doctrine ORM",
     "emulienfou/mongodb-pack": "A pack for the Doctrine MongoDB ODM"
   },
   "autoload": {
