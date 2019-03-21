@@ -2,6 +2,7 @@
 
 namespace Harmony\Bundle\UserBundle\Form\Type;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -26,11 +27,12 @@ class RegistrationFormType extends AbstractType
     /**
      * RegistrationFormType constructor.
      *
-     * @param string $userClass
+     * @param ManagerRegistry $registry
+     * @param string          $userClass
      */
-    public function __construct(string $userClass)
+    public function __construct(ManagerRegistry $registry, string $userClass)
     {
-        $this->userClass = $userClass;
+        $this->userClass = $registry->getManager()->getMetadataFactory()->getMetadataFor($userClass)->getName();
     }
 
     /**

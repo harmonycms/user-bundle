@@ -4,6 +4,7 @@ namespace Harmony\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -22,13 +23,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('user_orm_class')
-                    ->info('User entity class (FQDN)')
-                    ->defaultValue('App\Entity\User')
-                ->end()
-                ->scalarNode('user_mongodb_class')
-                    ->info('User MongoDB class (FQDN)')
-                    ->defaultValue('App\Document\User')
+                ->scalarNode('user_class')
+                    ->info('User class interface (FQDN)')
+                    ->defaultValue(UserInterface::class)
                 ->end()
                 ->arrayNode('password_reset')
                     ->addDefaultsIfNotSet()

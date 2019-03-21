@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use function class_implements;
+use function in_array;
 
 /**
  * Class UserProvider
@@ -39,7 +41,7 @@ class UserProvider implements UserProviderInterface
     {
         $this->registry  = $registry;
         $this->encoder   = $encoder;
-        $this->userClass = $userClass;
+        $this->userClass = $registry->getManager()->getMetadataFactory()->getMetadataFor($userClass)->getName();
     }
 
     /**
@@ -65,14 +67,10 @@ class UserProvider implements UserProviderInterface
     public function findUserByUsername(string $username): UserInterface
     {
         $criteria = new Criteria();
-        $criteria
-            ->orWhere($criteria->expr()->contains('username', $username))
-            ->orWhere($criteria->expr()->contains('email', $username));
+        $criteria->orWhere($criteria->expr()->contains('username', $username))->orWhere($criteria->expr()
+            ->contains('email', $username));
 
-        $user = $this->registry
-            ->getRepository($this->userClass)
-            ->matching($criteria)
-            ->first();
+        $user = $this->registry->getRepository($this->userClass)->matching($criteria)->first();
 
         if (false === $user) {
             throw new UsernameNotFoundException();
@@ -132,6 +130,6 @@ class UserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return \in_array(UserInterface::class, class_implements($class), true);
+        return in_array(UserInterface::class, class_implements($class), true);
     }
 }
