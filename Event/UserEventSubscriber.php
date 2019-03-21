@@ -2,10 +2,10 @@
 
 namespace Harmony\Bundle\UserBundle\Event;
 
+use Doctrine\Common\EventSubscriber;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Harmony\Bundle\UserBundle\Model\UserManager;
 use Harmony\Bundle\UserBundle\Security\UserInterface;
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
  * Class UserEventSubscriber
