@@ -13,7 +13,8 @@
     }
   ],
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "doctrine/implementation": "1.0"
   },
   "require-dev": {
     "symfony/validator": "^4.2"
