@@ -2,11 +2,17 @@
 
 namespace Harmony\Bundle\UserBundle\Model;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use function base64_encode;
+use function random_bytes;
+use function rtrim;
+use function str_replace;
+use function strlen;
 
 /**
  * Class UserManager
@@ -15,6 +21,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserManager
 {
+
+    /** @var ManagerRegistry $registry */
+    protected $registry;
 
     /** @var string $userClass */
     protected $userClass;
@@ -25,11 +34,13 @@ class UserManager
     /**
      * UserManager constructor.
      *
+     * @param ManagerRegistry         $registry
      * @param EncoderFactoryInterface $encoderFactory
      * @param string                  $userClass
      */
-    public function __construct(EncoderFactoryInterface $encoderFactory, string $userClass)
+    public function __construct(ManagerRegistry $registry, EncoderFactoryInterface $encoderFactory, string $userClass)
     {
+        $this->registry       = $registry;
         $this->encoderFactory = $encoderFactory;
         $this->userClass      = $userClass;
     }
@@ -40,22 +51,9 @@ class UserManager
      */
     public function createUser(): UserInterface
     {
-        $class = $this->getClass();
+        $class = $this->registry->getManager()->getMetadataFactory()->getMetadataFor($this->userClass)->getName();
 
         return new $class();
-    }
-
-    /**
-     * @return mixed
-     * @throws Exception
-     */
-    private function getClass()
-    {
-        if (!class_exists($this->userClass)) {
-            throw new Exception('Class not found : ' . $this->userClass);
-        }
-
-        return new $this->userClass;
     }
 
     /**
