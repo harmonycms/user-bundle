@@ -2,8 +2,6 @@
 
 namespace Harmony\Bundle\UserBundle\DependencyInjection;
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -33,10 +31,9 @@ class HarmonyUserExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
-        $container->setParameter('harmony_user.user_class', $config['user_class'] ?? null);
+        $container->setParameter('harmony_user.user_class', $config['user_class']);
         $container->setParameter('harmony_user.password_reset.email_from',
             $config['password_reset']['email_from'] ?? null);
-        $container->setParameter('harmony_user.password_reset.token_ttl',
-            $config['password_reset']['token_ttl'] ?? null);
+        $container->setParameter('harmony_user.password_reset.token_ttl', $config['password_reset']['token_ttl']);
     }
 }
