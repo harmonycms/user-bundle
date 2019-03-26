@@ -3,7 +3,7 @@
 namespace Harmony\Bundle\UserBundle\Controller;
 
 use Harmony\Bundle\UserBundle\Form\Type\RegistrationFormType;
-use Harmony\Bundle\UserBundle\Model\UserManager;
+use Harmony\Bundle\UserBundle\Manager\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,16 +21,16 @@ class RegistrationController extends AbstractController
     /** @var UserPasswordEncoderInterface $passwordEncoder */
     protected $passwordEncoder;
 
-    /** @var UserManager $manager */
+    /** @var UserManagerInterface $manager */
     protected $manager;
 
     /**
      * RegistrationController constructor.
      *
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param UserManager                  $manager
+     * @param UserManagerInterface         $manager
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, UserManager $manager)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, UserManagerInterface $manager)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->manager         = $manager;
@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request): Response
     {
-        $user = $this->manager->createUser();
+        $user = $this->manager->getInstance();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 

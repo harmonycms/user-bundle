@@ -1,25 +1,20 @@
 <?php
 
-namespace Harmony\Bundle\UserBundle\Model;
+namespace Harmony\Bundle\UserBundle\Manager;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Exception;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Harmony\Bundle\UserBundle\Security\UserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use function base64_encode;
-use function random_bytes;
-use function rtrim;
-use function str_replace;
 use function strlen;
 
 /**
  * Class UserManager
  *
- * @package Harmony\Bundle\UserBundle\Model
+ * @package Harmony\Bundle\UserBundle\Manager
  */
-class UserManager
+class UserManager implements UserManagerInterface
 {
 
     /** @var ManagerRegistry $registry */
@@ -49,7 +44,7 @@ class UserManager
      * @return UserInterface
      * @throws Exception
      */
-    public function createUser(): UserInterface
+    public function getInstance(): UserInterface
     {
         $class = $this->registry->getManager()->getMetadataFactory()->getMetadataFor($this->userClass)->getName();
 
@@ -57,7 +52,40 @@ class UserManager
     }
 
     /**
-     * @param UserInterface|User $user
+     * Create new user.
+     *
+     * @param UserInterface $user
+     */
+    public function create(UserInterface $user): void
+    {
+        $this->registry->getManager()->persist($user);
+        $this->registry->getManager()->flush();
+    }
+
+    /**
+     * Update existing user.
+     *
+     * @param UserInterface $user
+     */
+    public function update(UserInterface $user): void
+    {
+        $this->registry->getManager()->flush();
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return UserInterface
+     */
+    public function getUser(string $email): UserInterface
+    {
+        $class = $this->registry->getManager()->getMetadataFactory()->getMetadataFor($this->userClass)->getName();
+
+        return $this->registry->getRepository($class)->findOneBy(['email' => $email]);
+    }
+
+    /**
+     * @param UserInterface $user
      *
      * @throws \Exception
      */
@@ -65,13 +93,6 @@ class UserManager
     {
         $plainPassword = $user->getPlainPassword();
         if (0 !== strlen($plainPassword)) {
-            $salt = null;
-            if (!($this->encoderFactory->getEncoder($user) instanceof BCryptPasswordEncoder)) {
-                // salt is not used by bcrypt encoder
-                $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
-            }
-            $user->setSalt($salt);
-
             $hashedPassword = $this->encoderFactory->getEncoder($user)
                 ->encodePassword($plainPassword, $user->getSalt());
             $user->setPassword($hashedPassword);

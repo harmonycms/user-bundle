@@ -3,6 +3,13 @@
 namespace Harmony\Bundle\UserBundle\Model;
 
 use Harmony\Bundle\UserBundle\Security\UserInterface;
+use function array_search;
+use function array_unique;
+use function array_values;
+use function in_array;
+use function serialize;
+use function strtoupper;
+use function unserialize;
 
 /**
  * Class User
@@ -11,26 +18,6 @@ use Harmony\Bundle\UserBundle\Security\UserInterface;
  */
 abstract class User implements UserInterface, \Serializable
 {
-
-    /**
-     * @var string $username
-     */
-    private $username;
-
-    /**
-     * @var string $password
-     */
-    private $password;
-
-    /**
-     * @var string $email
-     */
-    private $email;
-
-    /**
-     * @var array $roles
-     */
-    private $roles = [self::ROLE_USER];
 
     /**
      * @var \DateTime $passwordRequestedAt
@@ -66,6 +53,26 @@ abstract class User implements UserInterface, \Serializable
      * @var string $plainPassword
      */
     protected $plainPassword;
+
+    /**
+     * @var string $username
+     */
+    private $username;
+
+    /**
+     * @var string $password
+     */
+    private $password;
+
+    /**
+     * @var string $email
+     */
+    private $email;
+
+    /**
+     * @var array $roles
+     */
+    private $roles = [self::ROLE_USER];
 
     /**
      * Get the value of username.
@@ -159,6 +166,50 @@ abstract class User implements UserInterface, \Serializable
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Never use this to check if this user has access to anything!
+     * Use the AuthorizationChecker, or an implementation of AccessDecisionManager
+     * instead, e.g. $securityContext->isGranted('ROLE_USER');.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role): bool
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return User
+     */
+    public function removeRole(string $role)
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return User
+     */
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
 
         return $this;
     }

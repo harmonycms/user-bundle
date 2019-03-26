@@ -4,7 +4,7 @@ namespace Harmony\Bundle\UserBundle\Event;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Harmony\Bundle\UserBundle\Model\UserManager;
+use Harmony\Bundle\UserBundle\Manager\UserManagerInterface;
 use Harmony\Bundle\UserBundle\Security\UserInterface;
 
 /**
@@ -15,15 +15,15 @@ use Harmony\Bundle\UserBundle\Security\UserInterface;
 class UserEventSubscriber implements EventSubscriber
 {
 
-    /** @var UserManager $manager */
+    /** @var UserManagerInterface $manager */
     private $manager;
 
     /**
      * UserEventSubscriber constructor.
      *
-     * @param UserManager $manager
+     * @param UserManagerInterface $manager
      */
-    public function __construct(UserManager $manager)
+    public function __construct(UserManagerInterface $manager)
     {
         $this->manager = $manager;
     }

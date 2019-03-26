@@ -11,7 +11,8 @@ services:
 
     Harmony\Bundle\UserBundle\Form\Type\RegistrationFormType: ~
 
-    Harmony\Bundle\UserBundle\Model\UserManager: ~
+    Harmony\Bundle\UserBundle\Manager\UserManager: ~
+    Harmony\Bundle\UserBundle\Manager\UserManagerInterface: '@Harmony\Bundle\UserBundle\Manager\UserManager'
 
     Harmony\Bundle\UserBundle\Controller\RegistrationController: ~
 
@@ -31,3 +32,6 @@ services:
         arguments:
             $mailer: '@mailer'
             $parameters: { email_from: '%harmony_user.password_reset.email_from%' }
+
+    Harmony\Bundle\UserBundle\Command\CreateUserCommand: ~
+    Harmony\Bundle\UserBundle\Command\PromoteUserCommand: ~

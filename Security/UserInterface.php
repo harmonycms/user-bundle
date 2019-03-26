@@ -115,4 +115,11 @@ interface UserInterface extends BaseUserInterface
      * @return bool
      */
     public function isPasswordRequestExpired(int $ttl): bool;
+
+    /**
+     * @param string
+     *
+     * @return bool
+     */
+    public function hasRole($role): bool;
 }
