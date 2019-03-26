@@ -3,6 +3,7 @@
 namespace Harmony\Bundle\UserBundle\Command;
 
 use Harmony\Bundle\UserBundle\Manager\UserManagerInterface;
+use Harmony\Bundle\UserBundle\Security\UserInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,14 +39,20 @@ class PromoteUserCommand extends Command
     protected function configure(): void
     {
         parent::configure();
-        $this->setName('user:promote')->setDescription('Promotes a user by adding a role')->setHelp(<<<'EOT'
+        $this->setName('user:promote')
+            ->setDescription('Promotes a user by adding a role')
+            ->setHelp(<<<'EOT'
 The <info>%command.name%</info> command promotes a user by adding a role
-  <info>%command.full_name% garak@example.com ROLE_CUSTOM</info>
+  <info>php %command.full_name% user ROLE_CUSTOM</info>
+  <info>php %command.full_name% --super user</info>
 EOT
-        )->setDefinition([
-            new InputArgument('email', InputArgument::REQUIRED, 'The email'),
-            new InputArgument('role', InputArgument::REQUIRED, 'The role'),
-        ]);
+            )
+            ->setDefinition([
+                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
+                new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
+                new InputOption('super', null, InputOption::VALUE_NONE,
+                    'Instead specifying role, use this to quickly add the super administrator role')
+            ]);
     }
 
     /**
@@ -63,9 +70,10 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $email = $input->getArgument('email');
-        $role  = $input->getArgument('role');
-        $user  = $this->manager->getUser($email);
+        $email = $input->getArgument('username');
+        $role  = true === $input->getOption('super') ? UserInterface::ROLE_SUPER_ADMIN : $input->getArgument('role');
+
+        $user = $this->manager->getUser($email);
         if (null === $user) {
             $output->writeln(sprintf('<error>Error</error>: user <comment>%s</comment> not found.', $email));
 
@@ -95,29 +103,36 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
-        if (!$input->getArgument('email')) {
-            $question = new Question('Please choose an email:');
-            $question->setValidator(function ($email) {
-                if (empty($email)) {
-                    throw new \InvalidArgumentException('Email can not be empty');
+        $questions = [];
+
+        if (!$input->getArgument('username')) {
+            $question = new Question('Please choose a username:');
+            $question->setValidator(function ($username) {
+                if (empty($username)) {
+                    throw new \Exception('Username can not be empty');
                 }
 
-                return $email;
+                return $username;
             });
-            $email = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument('email', $email);
+            $questions['username'] = $question;
         }
-        if (!$input->getArgument('role')) {
+
+        if ((true !== $input->getOption('super')) && !$input->getArgument('role')) {
             $question = new Question('Please choose a role:');
             $question->setValidator(function ($role) {
                 if (empty($role)) {
-                    throw new \InvalidArgumentException('Role can not be empty');
+                    throw new \Exception('Role can not be empty');
                 }
 
                 return $role;
             });
-            $role = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument('role', $role);
+            $questions['role'] = $question;
+        }
+
+        foreach ($questions as $name => $question) {
+            $answer = $this->getHelper('question')
+                ->ask($input, $output, $question);
+            $input->setArgument($name, $answer);
         }
     }
 }
