@@ -32,7 +32,7 @@ class RegistrationFormType extends AbstractType
      */
     public function __construct(ManagerRegistry $registry, string $userClass)
     {
-        $this->userClass = $registry->getManager()->getMetadataFactory()->getMetadataFor($userClass)->getName();
+        $this->userClass = $registry->getManager()->getClassMetadata($userClass)->getName();
     }
 
     /**

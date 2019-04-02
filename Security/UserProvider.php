@@ -41,7 +41,7 @@ class UserProvider implements UserProviderInterface
     {
         $this->registry  = $registry;
         $this->encoder   = $encoder;
-        $this->userClass = $registry->getManager()->getMetadataFactory()->getMetadataFor($userClass)->getName();
+        $this->userClass = $registry->getManager()->getClassMetadata($userClass)->getName();
     }
 
     /**
