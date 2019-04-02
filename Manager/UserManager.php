@@ -3,6 +3,7 @@
 namespace Harmony\Bundle\UserBundle\Manager;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
 use Harmony\Bundle\UserBundle\Security\UserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -20,6 +21,9 @@ class UserManager implements UserManagerInterface
     /** @var ManagerRegistry $registry */
     protected $registry;
 
+    /** @var ObjectManager $manager */
+    protected $manager;
+
     /** @var string $userClass */
     protected $userClass;
 
@@ -36,6 +40,7 @@ class UserManager implements UserManagerInterface
     public function __construct(ManagerRegistry $registry, EncoderFactoryInterface $encoderFactory, string $userClass)
     {
         $this->registry       = $registry;
+        $this->manager        = $registry->getManager();
         $this->encoderFactory = $encoderFactory;
         $this->userClass      = $userClass;
     }
@@ -46,7 +51,7 @@ class UserManager implements UserManagerInterface
      */
     public function getInstance(): UserInterface
     {
-        $class = $this->registry->getManager()->getMetadataFactory()->getMetadataFor($this->userClass)->getName();
+        $class = $this->manager->getClassMetadata($this->userClass)->getName();
 
         return new $class();
     }
@@ -58,8 +63,8 @@ class UserManager implements UserManagerInterface
      */
     public function create(UserInterface $user): void
     {
-        $this->registry->getManager()->persist($user);
-        $this->registry->getManager()->flush();
+        $this->manager->persist($user);
+        $this->manager->flush();
     }
 
     /**
@@ -69,17 +74,17 @@ class UserManager implements UserManagerInterface
      */
     public function update(UserInterface $user): void
     {
-        $this->registry->getManager()->flush();
+        $this->manager->flush();
     }
 
     /**
      * @param string $email
      *
-     * @return UserInterface
+     * @return UserInterface|object
      */
     public function getUser(string $email): UserInterface
     {
-        $class = $this->registry->getManager()->getMetadataFactory()->getMetadataFor($this->userClass)->getName();
+        $class = $this->manager->getClassMetadata($this->userClass)->getName();
 
         return $this->registry->getRepository($class)->findOneBy(['email' => $email]);
     }
@@ -87,7 +92,7 @@ class UserManager implements UserManagerInterface
     /**
      * @param UserInterface $user
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function hashPassword(UserInterface $user)
     {
