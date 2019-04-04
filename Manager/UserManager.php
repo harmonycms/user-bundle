@@ -84,9 +84,7 @@ class UserManager implements UserManagerInterface
      */
     public function getUser(string $email): UserInterface
     {
-        $class = $this->manager->getClassMetadata($this->userClass)->getName();
-
-        return $this->registry->getRepository($class)->findOneBy(['email' => $email]);
+        return $this->registry->getRepository($this->userClass)->findOneBy(['email' => $email]);
     }
 
     /**
