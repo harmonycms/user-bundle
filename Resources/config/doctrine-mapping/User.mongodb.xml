@@ -5,16 +5,16 @@
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <mapped-superclass name="Harmony\Bundle\UserBundle\Model\User">
-        <field name="username" fieldName="username" type="string" unique="true"/>
-        <field name="password" fieldName="password" type="string"/>
-        <field name="email" fieldName="email" type="string"/>
-        <field name="roles" fieldName="roles" type="collection"/>
-        <field name="password_requested_at" fieldName="passwordRequestedAt" type="date" nullable="true"/>
-        <field name="reset_token" fieldName="resetToken" type="string" nullable="true"/>
-        <field name="expired_at" fieldName="expiredAt" type="date" nullable="true"/>
-        <field name="deleted_at" fieldName="deletedAt" type="date" nullable="true"/>
-        <field name="is_locked" fieldName="isLocked" type="boolean"/>
-        <field name="is_password_reset_required" fieldName="isPasswordResetRequired" type="boolean"/>
+        <field name="username" type="string" unique="true"/>
+        <field name="password" type="string"/>
+        <field name="email" type="string"/>
+        <field name="roles" type="collection"/>
+        <field name="passwordRequestedAt" type="date" nullable="true"/>
+        <field name="resetToken" type="string" nullable="true"/>
+        <field name="expiredAt" type="date" nullable="true"/>
+        <field name="deletedAt" type="date" nullable="true"/>
+        <field name="isLocked" type="boolean"/>
+        <field name="isPasswordResetRequired" type="boolean"/>
     </mapped-superclass>
 
 </doctrine-mongo-mapping>
