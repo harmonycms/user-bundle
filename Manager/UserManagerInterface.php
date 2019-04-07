@@ -37,7 +37,7 @@ interface UserManagerInterface
     /**
      * @param string $email
      *
-     * @return UserInterface
+     * @return null|UserInterface
      */
-    public function getUser(string $email): UserInterface;
+    public function getUser(string $email): ?UserInterface;
 }

@@ -80,9 +80,9 @@ class UserManager implements UserManagerInterface
     /**
      * @param string $email
      *
-     * @return UserInterface|object
+     * @return null|UserInterface
      */
-    public function getUser(string $email): UserInterface
+    public function getUser(string $email): ?UserInterface
     {
         return $this->registry->getRepository($this->userClass)->findOneBy(['email' => $email]);
     }
