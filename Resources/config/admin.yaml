@@ -8,7 +8,7 @@ harmony_admin:
                 fields:
                     - 'username'
                     - 'email'
-                    - 'roles'
+                    - { property: 'roles', type: 'array' }
                     - 'isLocked'
             form:
                 fields:
