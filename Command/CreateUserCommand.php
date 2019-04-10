@@ -84,6 +84,7 @@ EOT
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPlainPassword($password);
+        $user->addRole(UserInterface::ROLE_USER);
         if ($superadmin) {
             $user->addRole(UserInterface::ROLE_SUPER_ADMIN);
         }
