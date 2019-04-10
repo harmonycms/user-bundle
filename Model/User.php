@@ -2,13 +2,13 @@
 
 namespace Harmony\Bundle\UserBundle\Model;
 
+use DateTime;
 use Harmony\Bundle\UserBundle\Security\UserInterface;
+use Serializable;
 use function array_search;
-use function array_unique;
 use function array_values;
 use function in_array;
 use function serialize;
-use function strtoupper;
 use function unserialize;
 
 /**
@@ -16,11 +16,16 @@ use function unserialize;
  *
  * @package Harmony\Bundle\UserBundle\Model
  */
-abstract class User implements UserInterface, \Serializable
+abstract class User implements UserInterface, Serializable
 {
 
     /**
-     * @var \DateTime $passwordRequestedAt
+     * @var string|int $id
+     */
+    protected $id;
+
+    /**
+     * @var DateTime $passwordRequestedAt
      */
     protected $passwordRequestedAt;
 
@@ -30,12 +35,12 @@ abstract class User implements UserInterface, \Serializable
     protected $resetToken;
 
     /**
-     * @var \DateTime $expiredAt
+     * @var DateTime $expiredAt
      */
     protected $expiredAt;
 
     /**
-     * @var \DateTime $deletedAt
+     * @var DateTime $deletedAt
      */
     protected $deletedAt;
 
@@ -72,7 +77,7 @@ abstract class User implements UserInterface, \Serializable
     /**
      * @var array $roles
      */
-    private $roles = [self::ROLE_USER];
+    private $roles;
 
     /**
      * Get the value of username.
@@ -89,9 +94,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $username
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setUsername($username)
+    public function setUsername($username): UserInterface
     {
         $this->username = $username;
 
@@ -113,9 +118,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $password
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setPassword($password)
+    public function setPassword($password): UserInterface
     {
         $this->password = $password;
 
@@ -137,9 +142,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param string $email
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): UserInterface
     {
         $this->email = $email;
 
@@ -149,11 +154,11 @@ abstract class User implements UserInterface, \Serializable
     /**
      * Get the value of roles.
      *
-     * @return array
+     * @return null|array
      */
-    public function getRoles(): array
+    public function getRoles(): ?array
     {
-        return array_unique($this->roles);
+        return $this->roles;
     }
 
     /**
@@ -161,9 +166,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param array $roles
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): UserInterface
     {
         $this->roles = $roles;
 
@@ -181,17 +186,17 @@ abstract class User implements UserInterface, \Serializable
      */
     public function hasRole($role): bool
     {
-        return in_array(strtoupper($role), $this->getRoles(), true);
+        return in_array($role, $this->getRoles(), true);
     }
 
     /**
      * @param string $role
      *
-     * @return User
+     * @return UserInterface
      */
-    public function removeRole(string $role)
+    public function removeRole(string $role): UserInterface
     {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+        if (false !== $key = array_search($role, $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
@@ -202,14 +207,11 @@ abstract class User implements UserInterface, \Serializable
     /**
      * @param string $role
      *
-     * @return User
+     * @return UserInterface
      */
-    public function addRole($role)
+    public function addRole($role): UserInterface
     {
-        $role = strtoupper($role);
-        if (!in_array($role, $this->roles, true)) {
-            $this->roles[] = $role;
-        }
+        $this->roles[] = $role;
 
         return $this;
     }
@@ -219,7 +221,7 @@ abstract class User implements UserInterface, \Serializable
      *
      * @return mixed
      */
-    public function getPasswordRequestedAt(): ?\DateTime
+    public function getPasswordRequestedAt(): ?DateTime
     {
         return $this->passwordRequestedAt;
     }
@@ -231,7 +233,7 @@ abstract class User implements UserInterface, \Serializable
      *
      * @return UserInterface
      */
-    public function setPasswordRequestedAt(?\DateTime $passwordRequestedAt): UserInterface
+    public function setPasswordRequestedAt(?DateTime $passwordRequestedAt): UserInterface
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
 
@@ -267,7 +269,7 @@ abstract class User implements UserInterface, \Serializable
      *
      * @return mixed
      */
-    public function getExpiredAt(): ?\DateTime
+    public function getExpiredAt(): ?DateTime
     {
         return $this->expiredAt;
     }
@@ -277,9 +279,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $expiredAt
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setExpiredAt(?\DateTime $expiredAt)
+    public function setExpiredAt(?DateTime $expiredAt): UserInterface
     {
         $this->expiredAt = $expiredAt;
 
@@ -291,7 +293,7 @@ abstract class User implements UserInterface, \Serializable
      *
      * @return mixed
      */
-    public function getDeletedAt(): ?\DateTime
+    public function getDeletedAt(): ?DateTime
     {
         return $this->deletedAt;
     }
@@ -301,9 +303,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $deletedAt
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setDeletedAt(?\DateTime $deletedAt)
+    public function setDeletedAt(?DateTime $deletedAt): UserInterface
     {
         $this->deletedAt = $deletedAt;
 
@@ -325,9 +327,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $isLocked
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setIsLocked($isLocked)
+    public function setIsLocked($isLocked): UserInterface
     {
         $this->isLocked = $isLocked;
 
@@ -349,9 +351,9 @@ abstract class User implements UserInterface, \Serializable
      *
      * @param mixed $isPasswordResetRequired
      *
-     * @return User
+     * @return UserInterface
      */
-    public function setIsPasswordResetRequired($isPasswordResetRequired)
+    public function setIsPasswordResetRequired($isPasswordResetRequired): UserInterface
     {
         $this->isPasswordResetRequired = $isPasswordResetRequired;
 
@@ -397,8 +399,10 @@ abstract class User implements UserInterface, \Serializable
      * Removes sensitive data from the user.
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
+     *
+     * @return UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): UserInterface
     {
         $this->plainPassword = null;
 
