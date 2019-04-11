@@ -36,6 +36,6 @@ services:
     Harmony\Bundle\UserBundle\Command\CreateUserCommand: ~
     Harmony\Bundle\UserBundle\Command\PromoteUserCommand: ~
 
-    Harmony\Bundle\CoreBundle\Form\Type\UserRoleType:
+    Harmony\Bundle\UserBundle\Form\Type\UserRoleType:
         arguments:
             $roleHierarchy: '%security.role_hierarchy.roles%'
