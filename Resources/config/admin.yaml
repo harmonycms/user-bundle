@@ -15,4 +15,4 @@ harmony_admin:
                     - 'username'
                     - 'email'
                     - { property: 'plainPassword', type: Symfony\Component\Form\Extension\Core\Type\TextType, type_options: { required: false } }
-                    - { property: 'roles', type: 'choice', type_options: { choices: { ROLE_USER: 'ROLE_USER', ROLE_ADMIN: 'ROLE_ADMIN' }, multiple: true } }
+                    - { property: 'roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
