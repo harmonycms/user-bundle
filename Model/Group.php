@@ -27,7 +27,6 @@ abstract class Group implements GroupInterface
      */
     protected $roles = [];
 
-
     /**
      * @return string|int
      */
@@ -125,5 +124,15 @@ abstract class Group implements GroupInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Returns group name
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }
