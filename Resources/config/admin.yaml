@@ -24,3 +24,7 @@ harmony_admin:
                 fields:
                     - 'name'
                     - { property: 'roles', type: 'array' }
+            form:
+                fields:
+                    - 'name'
+                    - { property: 'roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
