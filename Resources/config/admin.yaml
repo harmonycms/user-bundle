@@ -8,6 +8,7 @@ harmony_admin:
                 fields:
                     - 'username'
                     - 'email'
+                    - { property: 'groups', type: 'array' }
                     - { property: 'roles', type: 'array' }
                     - 'isLocked'
             form:
@@ -15,6 +16,7 @@ harmony_admin:
                     - 'username'
                     - 'email'
                     - { property: 'plainPassword', type: Symfony\Component\Form\Extension\Core\Type\TextType, type_options: { required: false } }
+                    - 'groups'
                     - { property: 'roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
 
         group:
