@@ -16,3 +16,11 @@ harmony_admin:
                     - 'email'
                     - { property: 'plainPassword', type: Symfony\Component\Form\Extension\Core\Type\TextType, type_options: { required: false } }
                     - { property: 'roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
+
+        group:
+            class: Harmony\Bundle\UserBundle\Group\GroupInterface
+            label: 'groups'
+            list:
+                fields:
+                    - 'name'
+                    - { property: 'roles', type: 'array' }
