@@ -223,6 +223,10 @@
                 <source>admin.is_locked</source>
                 <target>Is locked</target>
             </segment>
+            <segment>
+                <source>admin.plain_password</source>
+                <target>Plain password</target>
+            </segment>
         </unit>
     </file>
 </xliff>

@@ -14,11 +14,11 @@ harmony_admin:
                     - { property: 'isLocked', label: 'admin.is_locked' }
             form:
                 fields:
-                    - 'username'
-                    - 'email'
-                    - { property: 'plainPassword', type: Symfony\Component\Form\Extension\Core\Type\TextType, type_options: { required: false } }
-                    - 'groups'
-                    - { property: 'getUserRoles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
+                    - { property: 'username', label: 'admin.username' }
+                    - { property: 'email', label: 'admin.email' }
+                    - { property: 'plainPassword', label: 'admin.plain_password', type: Symfony\Component\Form\Extension\Core\Type\TextType, type_options: { required: false } }
+                    - { property: 'groups', label: 'admin.groups' }
+                    - { property: 'getUserRoles', label: 'admin.roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
 
         group:
             translation_domain: 'UserBundle'
@@ -30,5 +30,5 @@ harmony_admin:
                     - { property: 'roles', type: 'array', label: 'admin.roles' }
             form:
                 fields:
-                    - 'name'
-                    - { property: 'roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
+                    - { property: 'name', label: 'admin.name' }
+                    - { property: 'roles', label: 'admin.roles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
