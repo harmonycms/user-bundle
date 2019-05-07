@@ -190,10 +190,22 @@
                 <target>Register</target>
             </segment>
         </unit>
-        <unit id="registration">
+        <unit id="admin">
+            <segment>
+                <source>admin.users</source>
+                <target>Users</target>
+            </segment>
+            <segment>
+                <source>admin.groups</source>
+                <target>Groups</target>
+            </segment>
             <segment>
                 <source>admin.username</source>
                 <target>Username</target>
+            </segment>
+            <segment>
+                <source>admin.name</source>
+                <target>Name</target>
             </segment>
             <segment>
                 <source>admin.email</source>

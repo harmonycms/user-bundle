@@ -4,7 +4,7 @@ harmony_admin:
         user:
             translation_domain: 'UserBundle'
             class: Symfony\Component\Security\Core\User\UserInterface
-            label: 'users'
+            label: 'admin.users'
             list:
                 fields:
                     - { property: 'username', label: 'admin.username' }
@@ -21,12 +21,13 @@ harmony_admin:
                     - { property: 'getUserRoles', type: Harmony\Bundle\UserBundle\Form\Type\UserRoleType }
 
         group:
+            translation_domain: 'UserBundle'
             class: Harmony\Bundle\UserBundle\Group\GroupInterface
-            label: 'groups'
+            label: 'admin.groups'
             list:
                 fields:
-                    - 'name'
-                    - { property: 'roles', type: 'array' }
+                    - { property: 'name', label: 'admin.name' }
+                    - { property: 'roles', type: 'array', label: 'admin.roles' }
             form:
                 fields:
                     - 'name'
