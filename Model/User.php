@@ -5,10 +5,14 @@ namespace Harmony\Bundle\UserBundle\Model;
 use DateTime;
 use Harmony\Bundle\UserBundle\Security\UserInterface;
 use Serializable;
+use function array_merge;
 use function array_search;
+use function array_unique;
 use function array_values;
 use function in_array;
+use function method_exists;
 use function serialize;
+use function time;
 use function unserialize;
 
 /**
@@ -77,7 +81,7 @@ abstract class User implements UserInterface, Serializable
     /**
      * @var array $roles
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * Get the value of username.
@@ -152,13 +156,42 @@ abstract class User implements UserInterface, Serializable
     }
 
     /**
-     * Get the value of roles.
+     * Get all roles, also from groups.
+     * This method is internally used by Symfony Security itself to retrieve all roles of current user.
      *
-     * @return null|array
+     * @return array
+     * @see getUserRoles() method to the user's list of roles only.
      */
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+
+        if (method_exists($this, 'getGroups')) {
+            /** @var Group $group */
+            foreach ($this->getGroups() as $group) {
+                $roles = array_merge($roles, $group->getRoles());
+            }
+        }
+
+        // guarantee every user at least has ROLE_USER
+        $roles[] = UserInterface::ROLE_USER;
+
+        return array_unique($roles);
+    }
+
+    /**
+     * Get the value of roles only.
+     *
+     * @return array
+     */
+    public function getUserRoles(): array
+    {
+        $roles = $this->roles;
+
+        // guarantee every user at least has ROLE_USER
+        $roles[] = UserInterface::ROLE_USER;
+
+        return array_unique($roles);
     }
 
     /**
