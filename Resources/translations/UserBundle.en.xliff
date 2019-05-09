@@ -2,6 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
     <file id="UserBundle.en">
         <unit id="login">
+            <segement>
+                <source>login.title</source>
+                <target>Login</target>
+            </segement>
             <segment>
                 <source>login.username.label</source>
                 <target>Username or email</target>
@@ -40,6 +44,10 @@
             </segment>
         </unit>
         <unit id="password">
+            <segment>
+                <source>password.reset.title</source>
+                <target>Password reset</target>
+            </segment>
             <segment>
                 <source>password.request.username.label</source>
                 <target>Username or email</target>
@@ -153,6 +161,10 @@
             </segment>
         </unit>
         <unit id="registration">
+            <segment>
+                <source>register.title</source>
+                <target>Register</target>
+            </segment>
             <segment>
                 <source>registration.email.label</source>
                 <target>Email</target>

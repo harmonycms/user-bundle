@@ -2,6 +2,8 @@
 
 {% trans_default_domain 'UserBundle' %}
 
+{% block title %}{{ 'register.title'|trans }}{% endblock title %}
+
 {% block harmony_user_body %}
   {{ form_start(form) }}
   {{ form_row(form.email) }}

@@ -2,6 +2,8 @@
 
 {% trans_default_domain 'UserBundle' %}
 
+{% block title %}{{ 'login.title'|trans }}{% endblock title %}
+
 {% block harmony_user_body %}
     {{ form_start(form, { method: 'POST', action: path('harmony_user_login') }) }}
     {{ form_row(form._username) }}
