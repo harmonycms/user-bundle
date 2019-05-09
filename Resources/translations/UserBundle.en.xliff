@@ -2,10 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
     <file id="UserBundle.en">
         <unit id="login">
-            <segement>
+            <segment>
                 <source>login.title</source>
                 <target>Login</target>
-            </segement>
+            </segment>
             <segment>
                 <source>login.username.label</source>
                 <target>Username or email</target>
