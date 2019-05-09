@@ -2,7 +2,7 @@
 
 {% trans_default_domain 'UserBundle' %}
 
-{% block title %}Password reset{% endblock title %}
+{% block title %}{{ 'password.reset.title'|trans }}{% endblock title %}
 
 {% block harmony_user_body %}
     {{ form_start(form, { method: 'POST', action: path('harmony_user_password_reset', {'token': token}) }) }}
