@@ -1,13 +1,12 @@
 services:
     _defaults:
-        public: true
+        public: false
         autowire: true
         autoconfigure: true
         bind:
             $userClass: '%harmony_user.user_class%'
 
-    Harmony\Bundle\UserBundle\Security\UserProvider:
-        public: false
+    Harmony\Bundle\UserBundle\Security\UserProvider: ~
 
     Harmony\Bundle\UserBundle\Form\Type\RegistrationFormType: ~
 
