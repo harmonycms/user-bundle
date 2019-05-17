@@ -34,13 +34,15 @@ class UserManager implements UserManagerInterface
      * UserManager constructor.
      *
      * @param ManagerRegistry         $registry
+     * @param ObjectManager           $manager
      * @param EncoderFactoryInterface $encoderFactory
      * @param string                  $userClass
      */
-    public function __construct(ManagerRegistry $registry, EncoderFactoryInterface $encoderFactory, string $userClass)
+    public function __construct(ManagerRegistry $registry, ObjectManager $manager,
+                                EncoderFactoryInterface $encoderFactory, string $userClass)
     {
         $this->registry       = $registry;
-        $this->manager        = $registry->getManager();
+        $this->manager        = $manager;
         $this->encoderFactory = $encoderFactory;
         $this->userClass      = $userClass;
     }
